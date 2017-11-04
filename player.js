@@ -10,6 +10,7 @@ player = {
 	grease: 0.95,
 	nextFire: 0,
   	fireRate: 100,
+  	hp: 50,
   	effects: [],
 	cannon: {},
 	update: function() {
@@ -64,16 +65,19 @@ player = {
 		}
 	},
 	shoot: function() {
-		if (player.nextFire <= 0) {
-	    	this.gun.normal(player);
-	    	player.nextFire = player.fireRate;
+		if (this.nextFire <= 0) {
+	    	this.gun.normal(this);
+	    	this.nextFire = this.fireRate;
 	    }
-	}
+	},
+	action: function(effect, time) {
+	    this.effects.push({effect: effect, time: time, me: this})
+	  }
 }
 
 function setPlayer() {
 	this.y += boxy.outline/4
-	player.gun = guns["bouncer"]
+	player.gun = guns["lazer"]
 	player.cannon = {
 		outline: 5,
 		bodysize: 90,

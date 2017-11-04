@@ -1,10 +1,10 @@
 function setBoundaries() {
 	edge = 100
-	grounds.push(new Ground(Bodies.rectangle(canvaswidth/2, canvasheight + edge/2, canvaswidth, edge, { isStatic: true })));
+	// grounds.push(new Ground(Bodies.rectangle(canvaswidth/2, canvasheight + edge/2, canvaswidth, edge, { isStatic: true })));
 	grounds.push(new Ground(Bodies.rectangle(-edge/2, canvasheight/2, edge, canvasheight * 10, { isStatic: true })));
 	grounds.push(new Ground(Bodies.rectangle(canvaswidth + edge/2, canvasheight/2, edge, canvasheight * 10, { isStatic: true })));
 
-	bounds = Matter.Bounds.create([{x: -1000, y: -Infinity}, {x: canvaswidth + 1000, y: canvasheight * 2}])
+	bounds = Matter.Bounds.create([{x: -1000, y: -canvasheight}, {x: canvaswidth + 1000, y: canvasheight * 2}])
 }
 
 
