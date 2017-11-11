@@ -40,10 +40,15 @@ function keyPressed() {
 	}
 	if (keyCode == 32) {
 		// ultimate attack
+		player.shoot("ultimate");
+	}
+	if (keyCode == 88) {
+		// power attack
+		player.shoot("power");
 	}
 	if (keyCode == 90) {
 		// normal attack
-		player.shoot();
+		player.shoot("normal");
 	}
 	
 }
@@ -73,4 +78,8 @@ function keyDown() {
 		// turn brakes
 		player.velA *= 0.9;
 	}
+	// if (keyIsDown(90)) {
+	// 	// normal attack
+	// 	player.shoot();
+	// }
 }

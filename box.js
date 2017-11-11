@@ -10,9 +10,10 @@ function Ground(body, colour) {
   }
 }
 
-function Bullet(body, colour) {
+function Bullet(body, colour, damage=1, special={}) {
   this.type = "bullet";
   this.body = body;
+  this.damage = damage;
   this.colour = (colour === undefined) ? "black" : colour;
   this.destroy = false;
   World.add(world, this.body);
@@ -36,6 +37,9 @@ function Bullet(body, colour) {
     pop();
     if (!Matter.Bounds.contains(bounds, pos)) {
       this.rip();
+    }
+    if (special.update) {
+      special.update(this);
     }
   }
 
@@ -104,7 +108,7 @@ function Enemy(body, colour, hp, speed) {
 
     if (this.hp <= 0) {
       this.action(function() {me.rip()}, 1);
-      this.hp = 1;
+      this.hp = 0;
     }
 
     Body.translate(this.body, {x: 0, y: -this.speed});
@@ -115,12 +119,18 @@ function Enemy(body, colour, hp, speed) {
     }
   }
 
+  this.collide = function(pos, r=0) {
+    if ((this.body.position.x - pos.x)**2 + (this.body.position.y - pos.y)**2 <= (this.body.circleRadius + r)**2) {
+      return true;
+    }
+  }
+
   this.collision = function() {
     for (var i = bullets.length - 1; i >= 0; i--) {
       boxi = bullets[i];
-      if ((this.body.position.x - boxi.body.position.x)**2 + (this.body.position.y - boxi.body.position.y)**2 <= (this.body.circleRadius + boxi.body.circleRadius)**2) {
+      if (this.collide(boxi.body.position, boxi.body.circleRadius)) {
         if (this.nextHit <= 0) {
-          this.hp--;
+          this.hp -= boxi.damage;
           this.nextHit = this.hitRate;
         }
       }

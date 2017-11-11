@@ -9,7 +9,7 @@ player = {
 	friction: 0.98,
 	grease: 0.95,
 	nextFire: 0,
-  	fireRate: 100,
+  	fireRate: 120,// 100,
   	hp: 50,
   	effects: [],
 	cannon: {},
@@ -64,9 +64,9 @@ player = {
 			this.velA = -this.velA;
 		}
 	},
-	shoot: function() {
+	shoot: function(fire) {
 		if (this.nextFire <= 0) {
-	    	this.gun.normal(this);
+	    	this.gun[fire](this);
 	    	this.nextFire = this.fireRate;
 	    }
 	},
@@ -77,7 +77,7 @@ player = {
 
 function setPlayer() {
 	this.y += boxy.outline/4
-	player.gun = guns["lazer"]
+	player.gun = guns["bouncer"]
 	player.cannon = {
 		outline: 5,
 		bodysize: 90,
