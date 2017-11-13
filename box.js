@@ -13,6 +13,7 @@ function Ground(body, colour) {
 function Bullet(body, colour, damage=1, special={}) {
   this.type = "bullet";
   this.body = body;
+  this.hits = 0;
   this.damage = damage;
   this.colour = (colour === undefined) ? "black" : colour;
   this.destroy = false;
@@ -26,14 +27,13 @@ function Bullet(body, colour, damage=1, special={}) {
     strokeWeight(4);
     if (pos.y < 0) {
       triangle(pos.x, 0, pos.x - 20, 20, pos.x + 20, 20);
-    } else {
-      beginShape();
-      for (var i in this.body.vertices) {
-        vertexi = this.body.vertices[i];
-        vertex(vertexi.x, vertexi.y);
-      }
-      endShape(CLOSE);
     }
+    beginShape();
+    for (var i in this.body.vertices) {
+      vertexi = this.body.vertices[i];
+      vertex(vertexi.x, vertexi.y);
+    }
+    endShape(CLOSE);
     pop();
     if (!Matter.Bounds.contains(bounds, pos)) {
       this.rip();
@@ -57,7 +57,7 @@ function Enemy(body, colour, hp, speed) {
   this.colour = (colour === undefined) ? "black" : colour;
   this.destroy = false;
   this.nextHit = 0,
-  this.hitRate = 10,
+  this.hitRate = 3,
   this.effects = [],
   World.add(world, this.body);
 
@@ -70,14 +70,13 @@ function Enemy(body, colour, hp, speed) {
 
     if (pos.y < 0) {
       triangle(pos.x, 0, pos.x - 20, 20, pos.x + 20, 20);
-    } else {
-      beginShape();
-      for (var i in this.body.vertices) {
-        vertexi = this.body.vertices[i];
-        vertex(vertexi.x, vertexi.y);
-      }
-      endShape(CLOSE);
     }
+    beginShape();
+    for (var i in this.body.vertices) {
+      vertexi = this.body.vertices[i];
+      vertex(vertexi.x, vertexi.y);
+    }
+    endShape(CLOSE);
     pop();
 
     // effects
@@ -119,18 +118,28 @@ function Enemy(body, colour, hp, speed) {
     }
   }
 
-  this.collide = function(pos, r=0) {
-    if ((this.body.position.x - pos.x)**2 + (this.body.position.y - pos.y)**2 <= (this.body.circleRadius + r)**2) {
+  this.collide = function(boxbody) {
+    if (boxbody.label == "Rectangle Body" || boxbody.label == "Polygon Body") {
+      return collideCirclePoly(this.body.position.x, this.body.position.y, this.body.circleRadius*2, boxbody.vertices)
+    }
+    boxbody.circleRadius = (typeof boxbody.circleRadius === 'undefined') ? 0 : boxbody.circleRadius;
+    if ((this.body.position.x - boxbody.position.x)**2 + (this.body.position.y - boxbody.position.y)**2 <= (this.body.circleRadius + boxbody.circleRadius)**2) {
       return true;
     }
+    return false;
   }
 
   this.collision = function() {
     for (var i = bullets.length - 1; i >= 0; i--) {
       boxi = bullets[i];
-      if (this.collide(boxi.body.position, boxi.body.circleRadius)) {
+      if (this.collide(boxi.body)) {
         if (this.nextHit <= 0) {
+          boxi.hits++;
           this.hp -= boxi.damage;
+          player.nextPower += boxi.damage;
+          if (player.nextPower >= player.powerRate) {
+            player.nextPower = player.powerRate;
+          }
           this.nextHit = this.hitRate;
         }
       }

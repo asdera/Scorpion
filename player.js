@@ -9,7 +9,9 @@ player = {
 	friction: 0.98,
 	grease: 0.95,
 	nextFire: 0,
-  	fireRate: 120,// 100,
+  	fireRate: 120, // 100,
+  	nextPower: 0,
+  	powerRate: 600, // 100,
   	hp: 50,
   	effects: [],
 	cannon: {},
@@ -27,10 +29,32 @@ player = {
 
 		// drawing cannon
 		stroke("#000040");
-		fill("gray");
-		strokeWeight(this.cannon.outline);
+		strokeWeight(0);
+		fill("grey");
 		ellipse(this.x, this.y, this.cannon.bodysize)
-		fill("lightgray");
+		fill("red");
+		if (this.nextPower > 0) {
+			if (this.nextPower > this.powerRate/5) {
+				strokeWeight(this.cannon.outline);
+			}
+			if (this.nextPower == this.powerRate) {
+				ellipse(this.x, this.y, this.cannon.bodysize)
+			} else {
+				arc(this.x, this.y, this.cannon.bodysize, this.cannon.bodysize, -180 * this.nextPower / this.powerRate + 90, 180 * this.nextPower / this.powerRate + 90, CHORD);
+				strokeWeight(this.cannon.outline);
+			}
+		}
+		if (this.nextPower == this.powerRate) {
+			stroke("gold");
+		} else {
+			stroke("#000040");
+		}
+		strokeWeight(this.cannon.outline);
+		noFill()
+		ellipse(this.x, this.y, this.cannon.bodysize)
+		stroke("#000040");
+		strokeWeight(this.cannon.outline);
+		fill("lightgrey");
 		quad(this.x - cos(this.angle) * this.cannon.muzzle/2, this.y + sin(this.angle) * this.cannon.muzzle/2, this.x + cos(this.angle) * this.cannon.muzzle/2, this.y - sin(this.angle) * this.cannon.muzzle/2, this.x + cos(this.angle) * this.cannon.muzzle/2 + sin(this.angle) * this.cannon.length, this.y - sin(this.angle) * this.cannon.muzzle/2 + cos(this.angle) * this.cannon.length, this.x - cos(this.angle) * this.cannon.muzzle/2 + sin(this.angle) * this.cannon.length, this.y + sin(this.angle) * this.cannon.muzzle/2 + cos(this.angle) * this.cannon.length);
 		fill(this.gun.colour);
 		templength = this.cannon.length * (this.fireRate - this.nextFire) / this.fireRate
@@ -66,7 +90,16 @@ player = {
 	},
 	shoot: function(fire) {
 		if (this.nextFire <= 0) {
-	    	this.gun[fire](this);
+	    	if (fire == "normal") {
+	    		this.gun.normal(this);
+	    	} else if (fire == "power") {
+	    		if (this.nextPower >= this.powerRate) {
+			    	this.gun.power(this);
+			    	this.nextPower = 0;
+			    }
+		    } else {
+		    	this.gun.ultimate(this);
+		    }
 	    	this.nextFire = this.fireRate;
 	    }
 	},

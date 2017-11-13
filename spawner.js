@@ -2,8 +2,9 @@ spawner = {
 	frame: -1,
 	nextframe: 10,
 	rate: 500,
+	toughness: 40, //30
 	speed: 0.5,
-	maxtries: 10,
+	maxtries: 20,
 	update: function() {
 		this.frame++;		
 		if (this.frame >= this.nextframe) {
@@ -12,26 +13,31 @@ spawner = {
 
 			if (dice < 0.1) {
 				colour = "#420000"
-				hp = 12;
+				hp = Math.floor(Math.random() * 3 * this.toughness);
 				radius = 50;
 				number = 1;
 			} else if (dice < 0.2) {
 				colour = "#00ff90"
-				hp = 24;
+				hp = Math.floor(Math.random() * 5 * this.toughness);
 				radius = 200;
 				number = 1;
 			} else if (dice < 0.3) {
 				colour = "#aa6600"
-				hp = 6;
+				hp = Math.floor(Math.random() * 2 * this.toughness);
 				radius = 100;
 				number = 2;
+			} else if (dice < 0.4) {
+				colour = "#ff6060"
+				hp = Math.floor(Math.random() * 0.5 * this.toughness);
+				radius = 50;
+				number = 10;
 			} else {
 				colour = "#ff9900"
-				hp = 3;
+				hp = Math.floor(Math.random() * this.toughness);
 				radius = 50;
 				number = 4;
 			}
-
+			
 			for (var i = 0; i < number; i++) {
 				x = random(radius, canvaswidth - radius);
 				tries = 0
@@ -43,14 +49,15 @@ spawner = {
 					enemies.push(new Enemy(Bodies.circle(x, canvasheight + radius, radius, { isStatic: true }), colour, hp, this.speed))
 				}
 			}
-			this.nextframe += this.rate;
-			this.rate = this.rate * 99 / 100
+			this.nextframe += random(this.rate * 0.8, this.rate * 1.2);
+			this.rate = this.rate - 0.2
+			this.toughness = this.toughness + 0.2
 		}
 	},
 	checkX: function(pos, r) {
 		for (var i = 0; i < enemies.length; i++) {
 			boxi = enemies[i];
-			if (boxi.collide(pos, r)) {
+			if (boxi.collide({position: pos, circleRadius: r})) {
 				return true;
 			}
 		}

@@ -16,7 +16,7 @@ function mouseReleased() {
 		if (mouseX == mouse.x && mouseY == mouse.y) {
 			bullets.push(new Bullet(Bodies.circle(mouseX, mouseY, 40, { restitution: 1 }), "orange"));
 		} else if (abs(mouseX - mouse.x) * abs(mouseY - mouse.y) > 1000){
-			bullets.push(new Bullet(Bodies.rectangle(min(mouseX, mouse.x) + abs(mouseX - mouse.x) / 2, min(mouseY, mouse.y) + abs(mouseY - mouse.y) / 2, abs(mouseX - mouse.x), abs(mouseY - mouse.y), { restitution: 0.4 }), "darkgreen"));
+			bullets.push(new Bullet(Bodies.rectangle(min(mouseX, mouse.x) + abs(mouseX - mouse.x) / 2, min(mouseY, mouse.y) + abs(mouseY - mouse.y) / 2, abs(mouseX - mouse.x), abs(mouseY - mouse.y), { restitution: 1 }), "darkgreen"));
 		}
 	} else {
 		for (var i = bullets.length - 1; i >= 0; i--) {
@@ -38,7 +38,7 @@ function keyPressed() {
 		// restart level
 		clearWorld();
 	}
-	if (keyCode == 32) {
+	if (keyCode == 90) {
 		// ultimate attack
 		player.shoot("ultimate");
 	}
@@ -46,11 +46,15 @@ function keyPressed() {
 		// power attack
 		player.shoot("power");
 	}
-	if (keyCode == 90) {
+	if (keyCode == 32) {
 		// normal attack
 		player.shoot("normal");
 	}
-	
+	if (keyCode == 67) {
+		// switch weapons
+		var keys = Object.keys(guns)
+    	player.gun = guns[keys[ keys.length * Math.random() << 0]];
+	}
 }
 
 function keyDown() {
