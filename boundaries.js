@@ -8,18 +8,34 @@ function setBoundaries() {
 }
 
 
-boxy = {
-	height: player.y * 2,
+boxyinit = {
+	y: 0,
+	height: playerinit.y * 2,
 	outline: 10,
 	strips: 7,
 	minX: 45,
 	maxX: canvaswidth-45,
-	update: function() {stroke("gray");
+	vel: -60,
+	update: function() {
+		stroke("gray");
 		strokeWeight(this.outline);
 		fill("lightgray");
-		rect(this.outline/2, this.outline/2, canvaswidth - this.outline, this.height - this.outline/2);
+		rect(this.outline/2, this.y + this.outline/2, canvaswidth - this.outline, this.height - this.outline/2);
+		fill("#ff6060");
+		rect(this.outline/2, this.y + this.outline/2, player.hp / player.maxHp * (canvaswidth - this.outline), this.height - this.outline/2);
+	},
+	afterupdate: function() {stroke("gray");
 		for (var i = this.strips - 1; i >= 0; i--) {
-			line(i*canvaswidth/this.strips, this.outline/2, (i+1)*canvaswidth/this.strips, this.height)
+			line(i*canvaswidth/this.strips, this.y + this.outline/2, (i+1)*canvaswidth/this.strips, this.y + this.height)
 		}
-	}
+		stroke("gray");
+		strokeWeight(this.outline);
+		noFill();
+		rect(this.outline/2, this.y + this.outline/2, canvaswidth - this.outline, this.height - this.outline/2);
+	},
+	fall: function() {
+		this.vel++;
+		this.y += this.vel/5;
+		player.y = this.y + 50;
+	},
 }

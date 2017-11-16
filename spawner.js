@@ -1,8 +1,8 @@
-spawner = {
+spawnerinit = {
 	frame: -1,
 	nextframe: 10,
-	rate: 500,
-	toughness: 40, //30
+	rate: 600,
+	toughness: 30, //30
 	speed: 0.5,
 	maxtries: 20,
 	update: function() {
@@ -11,6 +11,8 @@ spawner = {
 
 			dice = Math.random()
 
+			special = {}
+
 			if (dice < 0.1) {
 				colour = "#420000"
 				hp = Math.floor(Math.random() * 3 * this.toughness);
@@ -18,7 +20,7 @@ spawner = {
 				number = 1;
 			} else if (dice < 0.2) {
 				colour = "#00ff90"
-				hp = Math.floor(Math.random() * 5 * this.toughness);
+				hp = Math.floor(Math.random() * 6 * this.toughness);
 				radius = 200;
 				number = 1;
 			} else if (dice < 0.3) {
@@ -31,6 +33,20 @@ spawner = {
 				hp = Math.floor(Math.random() * 0.5 * this.toughness);
 				radius = 50;
 				number = 10;
+			} else if (dice < 0.5) {
+				guntype = random(guns.index)
+				colour = guns[guntype].colour
+				hp = Math.floor(this.toughness);
+				radius = 50;
+				special = {
+					gun: guntype,
+					outline: "blue",
+					deathrattle: function(me) {
+						player.gun = guns[me.special.gun];
+						player.realscore++;
+					}
+				}
+				number = 1;
 			} else {
 				colour = "#ff9900"
 				hp = Math.floor(Math.random() * this.toughness);
@@ -46,7 +62,7 @@ spawner = {
 					tries++;
 				}
 				if (tries < this.maxtries) {
-					enemies.push(new Enemy(Bodies.circle(x, canvasheight + radius, radius, { isStatic: true }), colour, hp, this.speed))
+					enemies.push(new Enemy(Bodies.circle(x, canvasheight + radius, radius, { isStatic: true }), colour, hp, this.speed, special))
 				}
 			}
 			this.nextframe += random(this.rate * 0.8, this.rate * 1.2);

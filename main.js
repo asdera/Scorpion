@@ -1,35 +1,3 @@
-// module aliases
-var Engine = Matter.Engine,
-    World = Matter.World,
-    Bodies = Matter.Bodies,
-    Body = Matter.Body,
-    Vertices = Matter.Vertices,
-    Bounds = Matter.Bounds
-
-var engine;
-var world;
-var player;
-var bullets;
-var grounds;
-var bounds;
-var canvaswidth = 1800;
-var canvasheight = 900;
-var game = {};
-
-function setup() {
-	angleMode(DEGREES);
-	bullets = [];
-	enemies = [];
-	grounds = [];
-	Body.create();
-	createCanvas(canvaswidth, canvasheight);
-	engine = Engine.create();
-	world = engine.world;
-	Engine.run(engine);
-	setPlayer();
-	setBoundaries();
-}
-
 function draw() {
 	background(51);
 	spawner.update();
@@ -51,6 +19,7 @@ function draw() {
 			boxi.show();
 		}
 	}
+	boxy.afterupdate();
 	player.update();
 }
 

@@ -10,21 +10,24 @@ function Ground(body, colour) {
   }
 }
 
-function Bullet(body, colour, damage=1, special={}) {
+function Bullet(body, colour="black", damage=1, special={}) {
   this.type = "bullet";
   this.body = body;
   this.hits = 0;
   this.damage = damage;
-  this.colour = (colour === undefined) ? "black" : colour;
+  this.colour = colour;
+  this.outline = (special.outline === undefined) ? "white" : special.outline;
+  this.thickness = (special.thickness === undefined) ? 4 : special.thickness;
   this.destroy = false;
+  this.special = special;
   World.add(world, this.body);
 
   this.show = function() {
     pos = this.body.position;
     push();
-    stroke("white")
+    stroke(this.outline)
     fill(this.colour);
-    strokeWeight(4);
+    strokeWeight(this.thickness);
     if (pos.y < 0) {
       triangle(pos.x, 0, pos.x - 20, 20, pos.x + 20, 20);
     }
@@ -38,8 +41,8 @@ function Bullet(body, colour, damage=1, special={}) {
     if (!Matter.Bounds.contains(bounds, pos)) {
       this.rip();
     }
-    if (special.update) {
-      special.update(this);
+    if (this.special.update) {
+      this.special.update(this);
     }
   }
 
@@ -49,22 +52,24 @@ function Bullet(body, colour, damage=1, special={}) {
   }
 }
 
-function Enemy(body, colour, hp, speed) {
+function Enemy(body, colour, hp, speed, special={}) {
   this.type = "enemy";
   this.hp = hp;
   this.speed = speed;
   this.body = body;
   this.colour = (colour === undefined) ? "black" : colour;
+  this.outline = (special.outline === undefined) ? "white" : special.outline;
   this.destroy = false;
-  this.nextHit = 0,
-  this.hitRate = 3,
-  this.effects = [],
+  this.nextHit = 0;
+  this.hitRate = 3;
+  this.effects = [];
+  this.special = special;
   World.add(world, this.body);
 
   this.show = function() {
     pos = this.body.position;
     push();
-    stroke("white")
+    stroke(this.outline)
     fill(this.colour);
     strokeWeight(4);
 
@@ -83,10 +88,9 @@ function Enemy(body, colour, hp, speed) {
     eff = this.effects.length
     while (eff--) {
       effect = this.effects[eff];
-      me = effect.me
       effect.time--;
       if (effect.time <= 0) {
-        effect.effect();
+        effect.effect(this);
         this.effects.splice(eff, 1);
       }
     }
@@ -106,20 +110,29 @@ function Enemy(body, colour, hp, speed) {
     this.collision();
 
     if (this.hp <= 0) {
-      this.action(function() {me.rip()}, 1);
+      player.score++;
+      if (this.special.deathrattle) {
+        this.special.deathrattle(this);
+      }
+      this.action(function(me) {me.rip()}, 1);
+      // ISSUE CAUSE PLAYER TO GAIN x2 POINTS
       this.hp = 0;
     }
 
     Body.translate(this.body, {x: 0, y: -this.speed});
 
-    if (!Matter.Bounds.contains(bounds, pos) || this.body.position.y <= boxy.height) {
-      player.hp--;
+    if (!Matter.Bounds.contains(bounds, pos) || this.body.position.y <= boxy.height + boxy.y) {
+      player.damage();
       this.rip();
     }
   }
 
+  this.damage = function(hit=1) {
+    this.hp -= hit
+  }
+
   this.collide = function(boxbody) {
-    if (boxbody.label == "Rectangle Body" || boxbody.label == "Polygon Body") {
+    if (boxbody.label == "Rectangle Body" || boxbody.label == "Polygon Body" || boxbody.label == "Body") {
       return collideCirclePoly(this.body.position.x, this.body.position.y, this.body.circleRadius*2, boxbody.vertices)
     }
     boxbody.circleRadius = (typeof boxbody.circleRadius === 'undefined') ? 0 : boxbody.circleRadius;
@@ -135,7 +148,10 @@ function Enemy(body, colour, hp, speed) {
       if (this.collide(boxi.body)) {
         if (this.nextHit <= 0) {
           boxi.hits++;
-          this.hp -= boxi.damage;
+          if (boxi.special.onEnemy) {
+            boxi.special.onEnemy(boxi, this);
+          }
+          this.damage(boxi.damage);
           player.nextPower += boxi.damage;
           if (player.nextPower >= player.powerRate) {
             player.nextPower = player.powerRate;
@@ -147,7 +163,7 @@ function Enemy(body, colour, hp, speed) {
   }
 
   this.action = function(effect, time) {
-    this.effects.push({effect: effect, time: time, me: this})
+    this.effects.push({effect: effect, time: time})
   }
 
   this.rip = function() {

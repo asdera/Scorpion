@@ -35,8 +35,8 @@ function keyPressed() {
 		console.log(player)
 	}
 	if (keyCode == 82) {
-		// restart level
-		clearWorld();
+		// restart game
+		reset();
 	}
 	if (keyCode == 90) {
 		// ultimate attack
@@ -52,8 +52,7 @@ function keyPressed() {
 	}
 	if (keyCode == 67) {
 		// switch weapons
-		var keys = Object.keys(guns)
-    	player.gun = guns[keys[ keys.length * Math.random() << 0]];
+    	player.gun = guns[guns.index[(guns.index.indexOf(player.gun.name)+1)%guns.index.length]];
 	}
 }
 

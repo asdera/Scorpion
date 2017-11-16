@@ -1,6 +1,8 @@
-player = {
+playerinit = {
 	x: canvaswidth/2,
 	y: 50,
+	realscore: 0,
+	score: 0,
 	angle: 0,
 	speed: 1,
 	velX: 0,
@@ -9,10 +11,11 @@ player = {
 	friction: 0.98,
 	grease: 0.95,
 	nextFire: 0,
-  	fireRate: 120, // 100,
+  	fireRate: 120, // 120,
   	nextPower: 0,
-  	powerRate: 600, // 100,
-  	hp: 50,
+  	powerRate: 300, // 300,
+  	maxHp: 10,
+  	hp: 10,
   	effects: [],
 	cannon: {},
 	update: function() {
@@ -32,7 +35,7 @@ player = {
 		strokeWeight(0);
 		fill("grey");
 		ellipse(this.x, this.y, this.cannon.bodysize)
-		fill("red");
+		fill("blue");
 		if (this.nextPower > 0) {
 			if (this.nextPower > this.powerRate/5) {
 				strokeWeight(this.cannon.outline);
@@ -62,9 +65,13 @@ player = {
 
 		// cannon movement
 		if (this.nextFire > 0) {
-	      this.nextFire--;
+	      	this.nextFire--;
 	    } else {
-	      this.nextFire = 0;
+	      	this.nextFire = 0;
+	    }
+
+	    if (this.hp <= 0) {
+	    	boxy.fall();
 	    }
 
 		this.x += this.velX;
@@ -88,6 +95,15 @@ player = {
 			this.velA = -this.velA;
 		}
 	},
+	damage: function(hit=1) {
+		for (var i = 0; i < hit; i++) {
+			player.hp--;
+			bullets.push(new Bullet(Bodies.rectangle((player.hp + 0.5) / player.maxHp * (canvaswidth - boxy.outline), (boxy.height - boxy.outline) / 2, (canvaswidth - boxy.outline) / player.maxHp, boxy.height - boxy.outline/2, { restitution: 1 }), "#ff6060", 25, {
+				outline: "gray",
+				thickness: boxy.outline
+			}));
+		}
+	},
 	shoot: function(fire) {
 		if (this.nextFire <= 0) {
 	    	if (fire == "normal") {
@@ -104,7 +120,7 @@ player = {
 	    }
 	},
 	action: function(effect, time) {
-	    this.effects.push({effect: effect, time: time, me: this})
+	    this.effects.push({effect: effect, time: time})
 	  }
 }
 
