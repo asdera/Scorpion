@@ -25,7 +25,7 @@ spawnerinit = {
 				number = 1;
 			} else if (dice < 0.3) {
 				colour = "#aa6600"
-				hp = Math.floor(Math.random() * 2 * this.toughness);
+				hp = Math.floor(Math.random() * 3 * this.toughness);
 				radius = 100;
 				number = 2;
 			} else if (dice < 0.4) {
@@ -43,7 +43,11 @@ spawnerinit = {
 					outline: "blue",
 					deathrattle: function(me) {
 						player.gun = guns[me.special.gun];
-						player.realscore++;
+						menu.score.real++;
+						menu.score.display = "real";
+						menu.action(function() {
+							menu.score.display = "fake";
+						}, 100)
 					}
 				}
 				number = 1;

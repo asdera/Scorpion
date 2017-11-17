@@ -1,6 +1,9 @@
 function draw() {
-	background(51);
-	spawner.update();
+	background(51, menu.blur);
+	menu.update();
+	if (spawner.update) {
+		spawner.update();
+	}
 	keyDown();
 	for (var i = enemies.length - 1; i >= 0; i--) {
 		boxi = enemies[i];
@@ -11,6 +14,7 @@ function draw() {
 		}
 	}
 	boxy.update();
+	boxy.afterupdate();
 	for (var i = bullets.length - 1; i >= 0; i--) {
 		boxi = bullets[i];
 		if (boxi.destroy) {
@@ -19,7 +23,6 @@ function draw() {
 			boxi.show();
 		}
 	}
-	boxy.afterupdate();
 	player.update();
 }
 

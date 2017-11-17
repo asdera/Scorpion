@@ -1,8 +1,6 @@
 playerinit = {
 	x: canvaswidth/2,
 	y: 50,
-	realscore: 0,
-	score: 0,
 	angle: 0,
 	speed: 1,
 	velX: 0,
@@ -31,7 +29,7 @@ playerinit = {
 	    }
 
 		// drawing cannon
-		stroke("#000040");
+		stroke("white");
 		strokeWeight(0);
 		fill("grey");
 		ellipse(this.x, this.y, this.cannon.bodysize)
@@ -47,21 +45,26 @@ playerinit = {
 				strokeWeight(this.cannon.outline);
 			}
 		}
+		
 		if (this.nextPower == this.powerRate) {
-			stroke("gold");
+			ctx.shadowColor = "gold";
+      		ctx.shadowBlur = 10;
 		} else {
-			stroke("#000040");
+			ctx.shadowColor = "blue";
+      		ctx.shadowBlur = 10;
 		}
 		strokeWeight(this.cannon.outline);
 		noFill()
 		ellipse(this.x, this.y, this.cannon.bodysize)
-		stroke("#000040");
+
 		strokeWeight(this.cannon.outline);
 		fill("lightgrey");
 		quad(this.x - cos(this.angle) * this.cannon.muzzle/2, this.y + sin(this.angle) * this.cannon.muzzle/2, this.x + cos(this.angle) * this.cannon.muzzle/2, this.y - sin(this.angle) * this.cannon.muzzle/2, this.x + cos(this.angle) * this.cannon.muzzle/2 + sin(this.angle) * this.cannon.length, this.y - sin(this.angle) * this.cannon.muzzle/2 + cos(this.angle) * this.cannon.length, this.x - cos(this.angle) * this.cannon.muzzle/2 + sin(this.angle) * this.cannon.length, this.y + sin(this.angle) * this.cannon.muzzle/2 + cos(this.angle) * this.cannon.length);
+		ctx.shadowBlur = 0;
 		fill(this.gun.colour);
 		templength = this.cannon.length * (this.fireRate - this.nextFire) / this.fireRate
 		quad(this.x - cos(this.angle) * this.cannon.muzzle/2, this.y + sin(this.angle) * this.cannon.muzzle/2, this.x + cos(this.angle) * this.cannon.muzzle/2, this.y - sin(this.angle) * this.cannon.muzzle/2, this.x + cos(this.angle) * this.cannon.muzzle/2 + sin(this.angle) * templength, this.y - sin(this.angle) * this.cannon.muzzle/2 + cos(this.angle) * templength, this.x - cos(this.angle) * this.cannon.muzzle/2 + sin(this.angle) * templength, this.y + sin(this.angle) * this.cannon.muzzle/2 + cos(this.angle) * templength);
+		
 
 		// cannon movement
 		if (this.nextFire > 0) {
@@ -98,8 +101,8 @@ playerinit = {
 	damage: function(hit=1) {
 		for (var i = 0; i < hit; i++) {
 			player.hp--;
-			bullets.push(new Bullet(Bodies.rectangle((player.hp + 0.5) / player.maxHp * (canvaswidth - boxy.outline), (boxy.height - boxy.outline) / 2, (canvaswidth - boxy.outline) / player.maxHp, boxy.height - boxy.outline/2, { restitution: 1 }), "#ff6060", 25, {
-				outline: "gray",
+			bullets.push(new Bullet(Bodies.rectangle((player.hp + 0.5) / player.maxHp * (canvaswidth - boxy.outline), (boxy.height - boxy.outline) / 2, (canvaswidth - boxy.outline) / player.maxHp, boxy.height - boxy.outline/2, { restitution: 1 }), "#ffbaba", 25, {
+				outline: "red",
 				thickness: boxy.outline
 			}));
 		}
@@ -120,8 +123,8 @@ playerinit = {
 	    }
 	},
 	action: function(effect, time) {
-	    this.effects.push({effect: effect, time: time})
-	  }
+    	this.effects.push({effect: effect, time: time})
+  	}
 }
 
 function setPlayer() {

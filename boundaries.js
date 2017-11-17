@@ -17,21 +17,25 @@ boxyinit = {
 	maxX: canvaswidth-45,
 	vel: -60,
 	update: function() {
-		stroke("gray");
+		stroke("red");
 		strokeWeight(this.outline);
 		fill("lightgray");
 		rect(this.outline/2, this.y + this.outline/2, canvaswidth - this.outline, this.height - this.outline/2);
-		fill("#ff6060");
+		fill("#ffbaba");
 		rect(this.outline/2, this.y + this.outline/2, player.hp / player.maxHp * (canvaswidth - this.outline), this.height - this.outline/2);
 	},
 	afterupdate: function() {stroke("gray");
+		stroke("white");
+		strokeWeight(this.outline);
 		for (var i = this.strips - 1; i >= 0; i--) {
 			line(i*canvaswidth/this.strips, this.y + this.outline/2, (i+1)*canvaswidth/this.strips, this.y + this.height)
 		}
-		stroke("gray");
-		strokeWeight(this.outline);
+		stroke("white");
 		noFill();
+		ctx.shadowColor = "red";
+      	ctx.shadowBlur = 20;
 		rect(this.outline/2, this.y + this.outline/2, canvaswidth - this.outline, this.height - this.outline/2);
+		ctx.shadowBlur = 0;
 	},
 	fall: function() {
 		this.vel++;
@@ -39,3 +43,4 @@ boxyinit = {
 		player.y = this.y + 50;
 	},
 }
+

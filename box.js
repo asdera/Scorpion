@@ -24,20 +24,19 @@ function Bullet(body, colour="black", damage=1, special={}) {
 
   this.show = function() {
     pos = this.body.position;
-    push();
     stroke(this.outline)
     fill(this.colour);
     strokeWeight(this.thickness);
-    if (pos.y < 0) {
-      triangle(pos.x, 0, pos.x - 20, 20, pos.x + 20, 20);
-    }
+    // if (pos.y < 0) {
+    //   triangle(pos.x, 0, pos.x - 20, 20, pos.x + 20, 20);
+    // }
     beginShape();
     for (var i in this.body.vertices) {
       vertexi = this.body.vertices[i];
       vertex(vertexi.x, vertexi.y);
     }
     endShape(CLOSE);
-    pop();
+    
     if (!Matter.Bounds.contains(bounds, pos)) {
       this.rip();
     }
@@ -64,11 +63,11 @@ function Enemy(body, colour, hp, speed, special={}) {
   this.hitRate = 3;
   this.effects = [];
   this.special = special;
+  this.dying = false;
   World.add(world, this.body);
 
   this.show = function() {
     pos = this.body.position;
-    push();
     stroke(this.outline)
     fill(this.colour);
     strokeWeight(4);
@@ -82,7 +81,6 @@ function Enemy(body, colour, hp, speed, special={}) {
       vertex(vertexi.x, vertexi.y);
     }
     endShape(CLOSE);
-    pop();
 
     // effects
     eff = this.effects.length
@@ -110,13 +108,14 @@ function Enemy(body, colour, hp, speed, special={}) {
     this.collision();
 
     if (this.hp <= 0) {
-      player.score++;
+      menu.score.fake++;
       if (this.special.deathrattle) {
         this.special.deathrattle(this);
       }
       this.action(function(me) {me.rip()}, 1);
       // ISSUE CAUSE PLAYER TO GAIN x2 POINTS
-      this.hp = 0;
+      this.dying = true;
+      this.hp = 1;
     }
 
     Body.translate(this.body, {x: 0, y: -this.speed});
