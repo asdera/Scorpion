@@ -93,11 +93,13 @@ function Enemy(body, colour, hp, speed, special={}) {
       }
     }
 
-    textSize(this.body.circleRadius);
-    stroke("white")
-    fill("white");
-    textAlign(CENTER, CENTER);
-    text(String(this.hp), pos.x, pos.y);
+    if (!this.dying) {
+      textSize(this.body.circleRadius);
+      stroke("white")
+      fill("white");
+      textAlign(CENTER, CENTER);
+      text(String(this.hp), pos.x, pos.y);
+    }
 
     if (this.nextHit > 0) {
       this.nextHit--;
