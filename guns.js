@@ -101,7 +101,7 @@ guns = {
 		normal: function(player) {
 			force = 0.05
 			ballsize = 15
-			damage = 5
+			damage = 6
 			bounce = 0.8
 			minangle = -5
 			maxangle = 5
@@ -115,7 +115,7 @@ guns = {
 		power: function(player) {
 			force = 0.05  
 			ballsize = 15
-			damage = 5
+			damage = 6
 			bounce = 1
 			number = 6
 			minangle = -15
@@ -136,7 +136,7 @@ guns = {
 		ultimate: function(player) {
 			force = 0.1 
 			ballsize = 15
-			damage = 5
+			damage = 6
 			bounce = 1
 			number = 16
 			for (var i = 0; i < number; i++) {

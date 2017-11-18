@@ -17,6 +17,10 @@ boxyinit = {
 	maxX: canvaswidth-45,
 	vel: -60,
 	update: function() {
+		// if () {
+		// 	textSize(90);
+		// 	text("word", 100, 30);
+		// }
 		stroke("red");
 		strokeWeight(this.outline);
 		fill("lightgray");

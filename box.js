@@ -31,7 +31,7 @@ function Bullet(body, colour="black", damage=1, special={}) {
     //   triangle(pos.x, 0, pos.x - 20, 20, pos.x + 20, 20);
     // }
     beginShape();
-    for (var i in this.body.vertices) {
+    for (i in this.body.vertices) {
       vertexi = this.body.vertices[i];
       vertex(vertexi.x, vertexi.y);
     }
@@ -76,7 +76,7 @@ function Enemy(body, colour, hp, speed, special={}) {
       triangle(pos.x, 0, pos.x - 20, 20, pos.x + 20, 20);
     }
     beginShape();
-    for (var i in this.body.vertices) {
+    for (i in this.body.vertices) {
       vertexi = this.body.vertices[i];
       vertex(vertexi.x, vertexi.y);
     }
@@ -171,4 +171,8 @@ function Enemy(body, colour, hp, speed, special={}) {
     World.remove(world, this.body);
     this.destroy = true;
   }
+}
+
+function Particle(radius, colour) {
+  
 }

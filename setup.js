@@ -19,95 +19,168 @@ var canvasheight = 900;
 var game = {};
 var ctx;
 
-menu = {
-	x: 0,
-	state: "pregame",
-	width: 500,
-	height: 300,
-	blur: 130,
-	colour: "blue",
-	score: {
-		fake: 0,
-		real: 0,
-		display: "fake",
-	},
-	effects: [],
-	update: function() {
-		if (this.state == "pregame") {
-			ctx.shadowColor = "blue";
-      		ctx.shadowBlur = 20;
-			ctx.fillRect(canvaswidth/2-this.width, canvasheight/2-this.height, this.width*2, this.height*2);
-			ctx.shadowBlur = 0;
-		} else if (this.state == "ingame") {
-			// effects
-			eff = this.effects.length
-		    while (eff--) {
-		      effect = this.effects[eff];
-		      effect.time--;
-		      if (effect.time <= 0) {
-		        effect.effect();
-		        this.effects.splice(eff, 1);
-		      }
-		    }
-			if (this.score.display == "real") {
-				ctx.shadowColor = "yellow";
-			} else {
-				ctx.shadowColor = "white";
-			}
-      		ctx.shadowBlur = 20;
-			textSize(400);
-			strokeWeight(10);
-		    stroke("white")
-		    fill("gray");
-		    textAlign(CENTER, CENTER);
-		    if (this.score.display == "real") {
-		    	text(String(this.score.real), canvaswidth/2, canvasheight/2);
-		    } else {
-		    	text(String(this.score.fake), canvaswidth/2, canvasheight/2);
-		    }
-		    ctx.shadowBlur = 0;
-		}
-	},
-	fall: function() {
-
-	},
-	action: function(effect, time) {
-    	this.effects.push({effect: effect, time: time})
-  	}
+function preload() {
+	// myFont = loadFont("libraries/Gravedigger.otf");
 }
 
 function setup() {
-	angleMode(DEGREES);
-	init();
-	start();
-}
-
-function init() {
+	// textFont(myFont);
 	createCanvas(canvaswidth, canvasheight);
 	ctx = canvas.getContext('2d');
 	engine = Engine.create();
 	world = engine.world;
 	Engine.run(engine);
-	player = Object.assign({}, playerinit);
+	angleMode(DEGREES);
+	init();
+	// start();
+}
+
+function init() {
+	player = {}
 	boxy = Object.assign({}, boxyinit);
 	spawner = {}
 	bullets = [];
 	enemies = [];
 	grounds = [];
-	setPlayer();
 	setBoundaries();
 }
 
 function start() {
 	spawner = Object.assign({}, spawnerinit);
+	player = Object.assign({}, playerinit);
+	setPlayer();
 	menu.state = "ingame";
 }
 
 function reset() {
 	clearWorld();
-	init();
+	menu.state = "pregame";
+}
+
+function clearWorld() {
+	Matter.World.clear(world, false);
+	setup();
 }
 
 function length(pos1, pos2) {
     return sqrt((pos1.x-pos2.x)**2 + (pos1.y-pos2.y)**2)
+}
+
+function changeHue(rgb, degree) {
+    var hsl = rgbToHSL(rgb);
+    hsl.h += degree;
+    if (hsl.h > 360) {
+        hsl.h -= 360;
+    }
+    else if (hsl.h < 0) {
+        hsl.h += 360;
+    }
+    return hslToRGB(hsl);
+}
+
+// exepcts a string and returns an object
+function rgbToHSL(rgb) {
+    // strip the leading # if it's there
+    rgb = rgb.replace(/^\s*#|\s*$/g, '');
+
+    // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
+    if(rgb.length == 3){
+        rgb = rgb.replace(/(.)/g, '$1$1');
+    }
+
+    var r = parseInt(rgb.substr(0, 2), 16) / 255,
+        g = parseInt(rgb.substr(2, 2), 16) / 255,
+        b = parseInt(rgb.substr(4, 2), 16) / 255,
+        cMax = Math.max(r, g, b),
+        cMin = Math.min(r, g, b),
+        delta = cMax - cMin,
+        l = (cMax + cMin) / 2,
+        h = 0,
+        s = 0;
+
+    if (delta == 0) {
+        h = 0;
+    }
+    else if (cMax == r) {
+        h = 60 * (((g - b) / delta) % 6);
+    }
+    else if (cMax == g) {
+        h = 60 * (((b - r) / delta) + 2);
+    }
+    else {
+        h = 60 * (((r - g) / delta) + 4);
+    }
+
+    if (delta == 0) {
+        s = 0;
+    }
+    else {
+        s = (delta/(1-Math.abs(2*l - 1)))
+    }
+
+    return {
+        h: h,
+        s: s,
+        l: l
+    }
+}
+
+// expects an object and returns a string
+function hslToRGB(hsl) {
+    var h = hsl.h,
+        s = hsl.s,
+        l = hsl.l,
+        c = (1 - Math.abs(2*l - 1)) * s,
+        x = c * ( 1 - Math.abs((h / 60 ) % 2 - 1 )),
+        m = l - c/ 2,
+        r, g, b;
+
+    if (h < 60) {
+        r = c;
+        g = x;
+        b = 0;
+    }
+    else if (h < 120) {
+        r = x;
+        g = c;
+        b = 0;
+    }
+    else if (h < 180) {
+        r = 0;
+        g = c;
+        b = x;
+    }
+    else if (h < 240) {
+        r = 0;
+        g = x;
+        b = c;
+    }
+    else if (h < 300) {
+        r = x;
+        g = 0;
+        b = c;
+    }
+    else {
+        r = c;
+        g = 0;
+        b = x;
+    }
+
+    r = normalize_rgb_value(r, m);
+    g = normalize_rgb_value(g, m);
+    b = normalize_rgb_value(b, m);
+
+    return rgbToHex(r,g,b);
+}
+
+function normalize_rgb_value(color, m) {
+    color = Math.floor((color + m) * 255);
+    if (color < 0) {
+        color = 0;
+    }
+    return color;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
