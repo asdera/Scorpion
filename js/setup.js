@@ -14,9 +14,9 @@ var boxy;
 var bullets;
 var grounds;
 var bounds;
-const canvasWidth = 1800;
-const canvasHeight = 900;
-const ratio = canvasWidth/canvasHeight;
+const canvaswidth = 1800;
+const canvasheight = 900;
+const ratio = canvaswidth/canvasheight;
 const canvasPadding = 20
 var game = {};
 var ctx;
