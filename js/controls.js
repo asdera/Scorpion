@@ -77,6 +77,14 @@ function keyPressed() {
 	    	player.gun = guns[guns.index[keyCode - 48]];
 		}
 	}
+	if (keyCode == 66) {
+		// permanent brakes
+		player.breaks = !player.breaks;
+	}
+	if (keyCode == 71) {
+		// toggle glow
+		menu.glow = !menu.glow;
+	}
 }
 
 function keyDown() {
@@ -103,6 +111,10 @@ function keyDown() {
 		}
 		if (keyIsDown(87)) {
 			// turn brakes
+			player.velA *= 0.9;
+		}
+		if (player.breaks) {
+			player.velX *= 0.9;
 			player.velA *= 0.9;
 		}
 		// if (keyIsDown(90)) {

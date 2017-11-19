@@ -36,8 +36,8 @@ boxyinit = {
 		}
 		stroke("white");
 		noFill();
-		ctx.shadowColor = "red";
-      	ctx.shadowBlur = 20;
+		shadowColor("red");
+      	shadowBlur(20);
 		rect(this.outline/2, this.y + this.outline/2, canvaswidth - this.outline, this.height - this.outline/2);
 		ctx.shadowBlur = 0;
 	},

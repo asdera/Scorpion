@@ -27,8 +27,6 @@ function Bullet(body, colour="black", damage=1, special={}) {
     stroke(this.outline)
     fill(this.colour);
     strokeWeight(this.thickness);
-    ctx.shadowColor = this.colour;
-    ctx.shadowBlur = 0;
     // if (pos.y < 0) {
     //   triangle(pos.x, 0, pos.x - 20, 20, pos.x + 20, 20);
     // }
@@ -73,8 +71,8 @@ function Enemy(body, colour, hp, speed, special={}) {
     stroke(this.outline)
     fill(this.colour);
     strokeWeight(4);
-    ctx.shadowColor = "white";
-    ctx.shadowBlur = 10;
+    shadowColor(this.outline);
+    shadowBlur(10);
 
     if (pos.y < 0) {
       triangle(pos.x, 0, pos.x - 20, 20, pos.x + 20, 20);

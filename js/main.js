@@ -1,5 +1,9 @@
 function draw() {
-	background(51, menu.alpha);
+	if (menu.glow) {
+		background(51, 130);
+	} else {
+		background(51);
+	}
 	mouseHovered();
 	menu.update();
 	ctx.globalAlpha = 1;
@@ -45,10 +49,10 @@ function draw() {
 menu = {
 	state: "pregame",
 	semistate: "none",
+	glow: true,
 	fade: 1,
 	width: 500,
 	height: 300,
-	alpha: 130,
 	title: {
 		colour: "#0000ff"
 	},
@@ -130,37 +134,44 @@ menu = {
 					this.fade = 1;
 					this.semistate = "none";
 				} else {
-					this.fade -= 0.01
+					this.fade -= 0.02
 				}
+				this.ingame()
+			} else {
+				this.ingame()
 			}
-			this.ingame()
+			
 		}
 
 		// Outside Beat
-		ctx.shadowColor = "blue";
-		noFill();
-		stroke("blue")
-		strokeWeight(2);
-		beat = 40 * sin(this.music.time*5) + 40;
-		strength = beat/20;
-		for (var i = 0; i < strength; i++) {
-			ctx.shadowBlur = beat/strength*i
-			rect(-1, -1, canvaswidth+2, canvasheight+2);
+		if (menu.glow) {
+			shadowColor("blue");
+			noFill();
+			stroke("blue")
+			strokeWeight(2);
+			beat = 40 * sin(this.music.time*5) + 40;
+			strength = beat/20;
+			for (var i = 0; i < strength; i++) {
+				shadowBlur(beat/strength*i);
+				rect(-1, -1, canvaswidth+2, canvasheight+2);
+			}
+			shadowBlur(0);
 		}
-		ctx.shadowBlur = 0;
 		this.music.time++;
 	},
 	pregame: function() {
-		fill("black");
-		stroke("white");
-		strokeWeight(10);
-		ctx.shadowColor = "white";
-  		ctx.shadowBlur = 20;
-		//rect(this.center.x-this.width, this.center.y-this.height, this.width*2, this.height*2);
+		// fill("black");
+		// stroke("white");
+		// strokeWeight(10);
+		// shadowColor("white");
+  		// shadowBlur(20);
+		// rect(this.center.x-this.width, this.center.y-this.height, this.width*2, this.height*2);
+		this.tutorial();
 
 		fill("white");
 		textAlign(CENTER, CENTER);
-		ctx.shadowColor = this.title.colour;
+		shadowBlur(20);
+		shadowColor(this.title.colour);
 		textSize(180);
 		text("Scorpion", this.center.x, this.center.y - 200);
 		this.title.colour = changeHue(this.title.colour, 1)
@@ -171,13 +182,13 @@ menu = {
 			difficultyShape = this.difficulty[this.difficulty.index[i]]
 
 			if (this.difficulty.index[i] == this.difficulty.selected) {
-				ctx.shadowColor = "yellow";
+				shadowColor("yellow");
 			} else if (difficultyShape.hover) {
-				ctx.shadowColor = "red";
+				shadowColor("red");
 			} else {
-				ctx.shadowColor = "white";
+				shadowColor("white");
 			}
-			ctx.shadowBlur = 20;
+			shadowBlur(20);
 			fill("lightgray");
 			strokeWeight(10);
 
@@ -189,7 +200,7 @@ menu = {
 		    }
 		    endShape(CLOSE);
 
-		    ctx.shadowBlur = 10;
+		    shadowBlur(10);
 		    textSize(50);
 		    strokeWeight(0);
 		    fill("white");
@@ -202,13 +213,13 @@ menu = {
 		// Play Button
 
 		if (this.playButton.press) {
-			ctx.shadowColor = "yellow";
+			shadowColor("yellow");
 		} else if (this.playButton.hover) {
-			ctx.shadowColor = "red";
+			shadowColor("red");
 		} else {
-			ctx.shadowColor = "white";
+			shadowColor("white");
 		}
-		ctx.shadowBlur = 20;
+		shadowBlur(20);
 		strokeWeight(10);
 		fill("#202020");
 
@@ -223,6 +234,7 @@ menu = {
 	    triangle(this.center.x - this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y + this.playButton.arrow, this.center.x + this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y, this.center.x - this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y - this.playButton.arrow);
 		// trasforms
 		this.playButton.angle += 2;
+		shadowBlur(0);
 	},
 	ingame: function() {
 		// Effects
@@ -235,14 +247,13 @@ menu = {
 	        this.effects.splice(eff, 1);
 	      }
 	    }
-
+	    this.scorpion();
 		if (this.score.display == "real") {
-			ctx.shadowColor = "blue";
+			shadowColor("blue");
 		} else {
-			ctx.shadowColor = "white";
+			shadowColor("white");
 		}
-		this.scorpion();
-  		ctx.shadowBlur = 20;
+  		shadowBlur(20);
 		textSize(400);
 		strokeWeight(10);
 	    stroke("white")
@@ -256,6 +267,9 @@ menu = {
 	},
 	action: function(effect, time) {
     	this.effects.push({effect: effect, time: time})
+  	},
+  	tutorial: function() {
+
   	},
   	scorpion: function() {
   		noStroke();

@@ -15,7 +15,7 @@ var bullets;
 var grounds;
 var bounds;
 const ratio = 1800/900;
-const canvasPadding = 20
+const canvasPadding = 60
 const canvaswidth = window.innerWidth-canvasPadding*2;
 const canvasheight = canvaswidth/ratio;
 var game = {};
@@ -186,4 +186,18 @@ function normalize_rgb_value(color, m) {
 
 function rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+function shadowColor(a) {
+    if (menu.glow) {
+        ctx.shadowColor = a;
+    } else {
+        stroke(a);
+    }
+}
+
+function shadowBlur(a) {
+    if (menu.glow) {
+        ctx.shadowBlur = a;
+    }
 }

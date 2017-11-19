@@ -8,6 +8,7 @@ playerinit = {
 	velA: 0,
 	friction: 0.98,
 	grease: 0.95,
+	brakes: false,
 	nextFire: 0,
   	fireRate: 120, // 120,
   	nextPower: 0,
@@ -29,7 +30,11 @@ playerinit = {
 	    }
 
 		// drawing cannon
-		stroke("white");
+		if (menu.glow) {
+			stroke("white");
+		} else {
+			stroke("navy");
+		}
 		strokeWeight(0);
 		fill("grey");
 		ellipse(this.x, this.y, this.cannon.bodysize)
@@ -45,13 +50,12 @@ playerinit = {
 				strokeWeight(this.cannon.outline);
 			}
 		}
-		
 		if (this.nextPower == this.powerRate) {
-			ctx.shadowColor = "gold";
-      		ctx.shadowBlur = 10;
+			shadowColor("gold");
+      		shadowBlur(10);
 		} else {
-			ctx.shadowColor = "blue";
-      		ctx.shadowBlur = 10;
+			shadowColor("navy");
+      		shadowBlur(10);
 		}
 		strokeWeight(this.cannon.outline);
 		noFill()
