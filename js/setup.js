@@ -14,10 +14,10 @@ var boxy;
 var bullets;
 var grounds;
 var bounds;
-const canvaswidth = 1800;
-const canvasheight = 900;
-const ratio = canvaswidth/canvasheight;
+const ratio = 1800/900;
 const canvasPadding = 20
+const canvaswidth = window.innerWidth-canvasPadding*2;
+const canvasheight = canvaswidth/ratio;
 var game = {};
 var ctx;
 
@@ -27,9 +27,7 @@ function preload() {
 
 function setup() {
 	textFont("Trebuchet MS");
-	cw = window.innerWidth-canvasPadding*2
-	ch= cw/ratio
-	createCanvas(cw, ch);
+	createCanvas(canvaswidth, canvasheight);
 	ctx = canvas.getContext('2d');
 	engine = Engine.create();
 	world = engine.world;
