@@ -2,11 +2,15 @@ body {
 	text-align: center;
 	cursor: crosshair;
 	background: black;
+	zoom: 100%;
 }
 
 canvas {
 	border: 10px solid blue;
-	background: #515151
+	background: #515151;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0);
 }
 
 #brightener {

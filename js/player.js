@@ -112,15 +112,17 @@ playerinit = {
 		if (this.nextFire <= 0) {
 	    	if (fire == "normal") {
 	    		this.gun.normal(this);
+	    		this.nextFire = this.fireRate;
 	    	} else if (fire == "power") {
 	    		if (this.nextPower >= this.powerRate) {
 			    	this.gun.power(this);
 			    	this.nextPower = 0;
+			    	this.nextFire = this.fireRate;
 			    }
 		    } else {
 		    	this.gun.ultimate(this);
+		    	this.nextFire = this.fireRate;
 		    }
-	    	this.nextFire = this.fireRate;
 	    }
 	},
 	action: function(effect, time) {
@@ -129,7 +131,7 @@ playerinit = {
 }
 
 function setPlayer() {
-	this.y += boxy.outline/4
+	player.y += boxy.outline/4
 	player.gun = guns["bouncer"]
 	player.cannon = {
 		outline: 5,
@@ -139,4 +141,17 @@ function setPlayer() {
 		minX: -80,
 		maxX: 80,
 	}
+	if (menu.difficulty.selected == "expert") {
+        spawner.rate = 300;
+        player.hp = 1;
+        player.maxHp = 1;
+    } else if (menu.difficulty.selected == "hard") {
+        spawner.rate = 400;
+        player.hp = 3;
+        player.maxHp = 3;
+    } else if (menu.difficulty.selected == "medium") {
+        spawner.rate = 500;
+        player.hp = 5;
+        player.maxHp = 5;
+    }
 }

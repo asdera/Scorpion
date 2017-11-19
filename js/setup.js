@@ -24,7 +24,7 @@ function preload() {
 }
 
 function setup() {
-	// textFont(myFont);
+	textFont("Trebuchet MS");
 	createCanvas(canvaswidth, canvasheight);
 	ctx = canvas.getContext('2d');
 	engine = Engine.create();
@@ -50,6 +50,7 @@ function start() {
 	player = Object.assign({}, playerinit);
 	setPlayer();
 	menu.state = "ingame";
+    menu.semistate = "pregame";
 }
 
 function reset() {
