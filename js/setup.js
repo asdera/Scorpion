@@ -12,6 +12,7 @@ var player;
 var spawner;
 var boxy;
 var bullets;
+var particles;
 var grounds;
 var bounds;
 const ratio = 1800/900;
@@ -44,6 +45,7 @@ function init() {
 	bullets = [];
 	enemies = [];
 	grounds = [];
+    particles = [];
 	setBoundaries();
 }
 
@@ -65,7 +67,7 @@ function clearWorld() {
 	setup();
 }
 
-function length(pos1, pos2) {
+function getLength(pos1, pos2) {
     return sqrt((pos1.x-pos2.x)**2 + (pos1.y-pos2.y)**2)
 }
 

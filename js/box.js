@@ -132,6 +132,12 @@ function Enemy(body, colour, hp, speed, special={}) {
   }
 
   this.damage = function(hit=1) {
+    angleplus = random(0, 360)
+    if (hit > 3) {
+      for (var i = 0; i < min(20, floor(hit/2)); i++) {
+        particles.push(new Particle("line", this.body.position.x, this.body.position.y, 20, angleplus + i * (360 / min(20, floor(hit/2))), this.colour, {start: this.body.circleRadius}))
+      }
+    }
     this.hp -= hit
   }
 
@@ -176,6 +182,36 @@ function Enemy(body, colour, hp, speed, special={}) {
   }
 }
 
-function Particle(radius, colour) {
-  
+function Particle(type, x, y, length, angle, colour, special={}) {
+  this.x = x;
+  this.y = y;
+  this.offset = (special.start === undefined) ? 0 : special.start;
+  this.length = (special.start === undefined) ? 0 : special.start;
+  this.angle = angle;
+  this.life = 0;
+  this.time = length;
+  this.colour = colour;
+  this.type = type;
+  this.destroy = false;
+  this.special = special;
+  this.show = function() {
+    this.life++;
+    stroke("white");
+    strokeWeight(4);
+    shadowBlur(10);
+    shadowColor(this.colour);
+
+    line(this.x + sin(this.angle) * this.offset, this.y + cos(this.angle) * this.offset, this.x + sin(this.angle) * this.length, this.y + cos(this.angle) * this.length);
+    if (this.life > this.time) {
+      this.destroy = true;
+    } else if (this.life > this.time/2) {
+      this.offset += 3;
+      this.length += 1;
+    } else {
+      this.offset += 1;
+      this.length += 3;
+    }
+    print(this.offset, this.length)
+    shadowBlur(0)
+  }
 }

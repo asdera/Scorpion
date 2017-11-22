@@ -6,7 +6,7 @@ body {
 }
 
 canvas {
-	border: 10px solid blue;
+	border: 10px solid darkgreen;
 	background: #515151;
 	position: absolute;
 	left: 50%;

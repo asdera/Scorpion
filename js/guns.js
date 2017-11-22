@@ -363,9 +363,9 @@ guns = {
 					meanest = meanie
 					for (var i = 0; i < enemies.length; i++) {
 						enemy = enemies[i];
-						if (length(meanie.body.position, enemy.body.position) != 0 && length(meanie.body.position, enemy.body.position) < minlength) {
+						if (getLength(meanie.body.position, enemy.body.position) != 0 && getLength(meanie.body.position, enemy.body.position) < minlength) {
 							meanest = enemy
-							minlength = length(meanie.body.position, enemy.body.position)
+							minlength = getLength(meanie.body.position, enemy.body.position)
 						}
 					}
 					if (meanest.colour != "yellow") {
@@ -394,7 +394,7 @@ guns = {
 					damage = 6
 					for (var i = 0; i < enemies.length; i++) {
 						enemy = enemies[i];
-						if (length(meanie.body.position, enemy.body.position) != 0) {
+						if (getLength(meanie.body.position, enemy.body.position) != 0) {
 							if (enemy.colour != "yellow") {
 								enemy.shock = enemy.colour
 								enemy.action(function(me) {
@@ -418,7 +418,7 @@ guns = {
 						damage = 6
 						for (var i = 0; i < enemies.length; i++) {
 							enemy = enemies[i];
-							if (length(meanie.body.position, enemy.body.position) != 0) {
+							if (getLength(meanie.body.position, enemy.body.position) != 0) {
 								if (enemy.colour != "yellow") {
 									enemy.shock = enemy.colour
 									enemy.colour = "yellow"
@@ -453,9 +453,9 @@ guns = {
 						meanest = meanie
 						for (var i = 0; i < enemies.length; i++) {
 							enemy = enemies[i];
-							if (length(meanie.body.position, enemy.body.position) != 0 && length(meanie.body.position, enemy.body.position) < minlength) {
+							if (getLength(meanie.body.position, enemy.body.position) != 0 && getLength(meanie.body.position, enemy.body.position) < minlength) {
 								meanest = enemy
-								minlength = length(meanie.body.position, enemy.body.position)
+								minlength = getLength(meanie.body.position, enemy.body.position)
 							}
 						}
 						if (meanest.colour != "yellow") {

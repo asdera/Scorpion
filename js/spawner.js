@@ -84,3 +84,7 @@ spawnerinit = {
 		return false;
 	}
 }
+
+worlds = {
+	
+}

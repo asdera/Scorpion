@@ -12,32 +12,40 @@ function draw() {
 	}
 	keyDown();
 	for (var i = enemies.length - 1; i >= 0; i--) {
-		boxi = enemies[i];
-		if (boxi.destroy) {
+		obj = enemies[i];
+		if (obj.destroy) {
 			enemies.splice(i,1)
 		} else {
-			boxi.show();
+			obj.show();
+		}
+	}
+	for (var i = particles.length - 1; i >= 0; i--) {
+		obj = particles[i];
+		if (obj.destroy) {
+			particles.splice(i,1)
+		} else {
+			obj.show();
 		}
 	}
 	boxy.update();
 	for (var i = bullets.length - 1; i >= 0; i--) {
-		boxi = bullets[i];
-		if (boxi.special.behind) {
-			if (boxi.destroy) {
+		obj = bullets[i];
+		if (obj.special.behind) {
+			if (obj.destroy) {
 				bullets.splice(i,1)
 			} else {
-				boxi.show();
+				obj.show();
 			}
 		}
 	}
 	boxy.afterupdate();
 	for (var i = bullets.length - 1; i >= 0; i--) {
-		boxi = bullets[i];
-		if (!boxi.special.behind) {
-			if (boxi.destroy) {
+		obj = bullets[i];
+		if (!obj.special.behind) {
+			if (obj.destroy) {
 				bullets.splice(i,1)
 			} else {
-				boxi.show();
+				obj.show();
 			}
 		}
 	}
@@ -104,7 +112,6 @@ menu = {
 			angle: 0,
 			speed: 6,
 			hover: false,
-			press: false,
 		},
 		expert: {
 			x: -500,
@@ -144,17 +151,20 @@ menu = {
 		}
 
 		// Outside Beat
+
 		if (menu.glow) {
-			shadowColor("blue");
+			if (menu.state == "ingame" && player.nextUltimate == player.ultimateRate) {
+				shadowColor("yellow");
+			} else {
+				shadowColor("blue");
+			}
 			noFill();
 			stroke("blue")
 			strokeWeight(2);
-			beat = 40 * sin(this.music.time*5) + 40;
+			beat = 40 * sin(this.music.time*9) + 40;
 			strength = beat/20;
-			for (var i = 0; i < strength; i++) {
-				shadowBlur(beat/strength*i);
-				rect(-1, -1, canvaswidth+2, canvasheight+2);
-			}
+			shadowBlur(beat);
+			rect(-1, -1, canvaswidth+2, canvasheight+2);
 			shadowBlur(0);
 		}
 		this.music.time++;

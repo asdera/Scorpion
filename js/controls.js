@@ -8,13 +8,13 @@ function mouseHovered() {
 	if (menu.state == "pregame") {
 		for (i = 0; i < menu.difficulty.index.length; i++) {
 			difficultyShape = menu.difficulty[menu.difficulty.index[i]]
-			if (length({x: mouseX, y: mouseY}, {x: menu.center.x + difficultyShape.x, y: menu.center.y + difficultyShape.y}) <= menu.difficulty.length) {
+			if (getLength({x: mouseX, y: mouseY}, {x: menu.center.x + difficultyShape.x, y: menu.center.y + difficultyShape.y}) <= menu.difficulty.length) {
 				difficultyShape.hover = true;
 			} else {
 				difficultyShape.hover = false;
 			}
 		}
-		if (length({x: mouseX, y: mouseY}, {x: menu.center.x + menu.playButton.x, y: menu.center.y + menu.playButton.y}) <= menu.playButton.length) {
+		if (getLength({x: mouseX, y: mouseY}, {x: menu.center.x + menu.playButton.x, y: menu.center.y + menu.playButton.y}) <= menu.playButton.length) {
 			menu.playButton.hover = true;
 		} else {
 			menu.playButton.hover = false;
@@ -27,7 +27,7 @@ function mousePressed() {
 	if (menu.state == "pregame") {
 		for (i = 0; i < menu.difficulty.index.length; i++) {
 			difficultyShape = menu.difficulty[menu.difficulty.index[i]]
-			if (length({x: mouseX, y: mouseY}, {x: menu.center.x + difficultyShape.x, y: menu.center.y + difficultyShape.y}) <= menu.difficulty.length) {
+			if (difficultyShape.hover) {
 				menu.difficulty.selected = menu.difficulty.index[i]
 			}
 		}
@@ -35,7 +35,9 @@ function mousePressed() {
 			menu.playButton.press = true;
 		}
 	}
-	print(Math.round((mouseX - menu.center.x)/25)*25, Math.round((mouseY - menu.center.y)/25)*25)
+	for (var i = 0; i < 4; i++) {
+		particles.push(new Particle("line", mouseX, mouseY, 30, i*90+45, "blue"))
+	}
 }
 
 function mouseReleased() {

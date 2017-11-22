@@ -34,9 +34,13 @@ boxyinit = {
 		for (var i = this.strips - 1; i >= 0; i--) {
 			line(i*canvaswidth/this.strips, this.y + this.outline/2, (i+1)*canvaswidth/this.strips, this.y + this.height)
 		}
-		stroke("white");
-		noFill();
-		shadowColor("red");
+		if (menu.state == "ingame" && !menu.glow && player.nextUltimate == player.ultimateRate) {
+			stroke("yellow");
+		} else {
+			stroke("white");
+			noFill();
+			shadowColor("red");
+		}
       	shadowBlur(20);
 		rect(this.outline/2, this.y + this.outline/2, canvaswidth - this.outline, this.height - this.outline/2);
 		ctx.shadowBlur = 0;

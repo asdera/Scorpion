@@ -13,6 +13,8 @@ playerinit = {
   	fireRate: 120, // 120,
   	nextPower: 0,
   	powerRate: 300, // 300,
+  	nextUltimate: 0,
+  	ultimateRate: 1, // 300,
   	maxHp: 10,
   	hp: 10,
   	effects: [],
@@ -124,8 +126,11 @@ playerinit = {
 			    	this.nextFire = this.fireRate;
 			    }
 		    } else {
-		    	this.gun.ultimate(this);
-		    	this.nextFire = this.fireRate;
+		    	if (this.nextUltimate >= this.ultimateRate) {
+			    	this.gun.ultimate(this);
+			    	this.nextUltimate = 0;
+			    	this.nextFire = this.fireRate;
+			    }
 		    }
 	    }
 	},
