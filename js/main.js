@@ -265,11 +265,11 @@ menu = {
 	    }
 
 		if (spawner.world == "future") {
-			this.scorpion("#353c68");
+			this.scorpion("#162844");
 		} else if (spawner.world == "nether") {
-			this.scorpion("#683535");
+			this.scorpion("#441515");
 		} else if (spawner.world == "boreal") {
-			this.scorpion("#35683e");
+			this.scorpion("#154415");
 		}
 		
 		if (this.score.display == "real") {
