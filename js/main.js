@@ -280,8 +280,14 @@ menu = {
   		shadowBlur(20);
 		textSize(400);
 		strokeWeight(10);
+
 	    stroke("white")
 	    fill("gray");
+	    if (this.score.display == "real") {
+	    	shadowColor("blue");
+	    } else {
+		shadowColor("white");
+	    }
 	    textAlign(CENTER, CENTER);
 	    if (this.score.display == "real") {
 	    	text(String(this.score.real), this.center.x, this.center.y);
