@@ -155,8 +155,14 @@ menu = {
 		if (menu.glow) {
 			if (menu.state == "ingame" && player.nextUltimate == player.ultimateRate) {
 				shadowColor("yellow");
-			} else {
+			} else if (menu.state == "ingame" && spawner.world == "future") {
 				shadowColor("blue");
+			} else if (menu.state == "ingame" && spawner.world == "nether") {
+				shadowColor("brown");
+			} else if (menu.state == "ingame" && spawner.world == "boreal") {
+				shadowColor("forestgreen");
+			} else {
+				shadowColor("white");
 			}
 			noFill();
 			stroke("blue")
@@ -257,7 +263,15 @@ menu = {
 	        this.effects.splice(eff, 1);
 	      }
 	    }
-	    this.scorpion();
+
+		if (spawner.world == "future") {
+			this.scorpion("#353c68");
+		} else if (spawner.world == "nether") {
+			this.scorpion("#683535");
+		} else if (spawner.world == "boreal") {
+			this.scorpion("#35683e");
+		}
+		
 		if (this.score.display == "real") {
 			shadowColor("blue");
 		} else {
@@ -281,9 +295,9 @@ menu = {
   	tutorial: function() {
 
   	},
-  	scorpion: function() {
+  	scorpion: function(colour) {
   		noStroke();
-	    fill("#222222");
+	    fill(colour);
 		ellipse(this.center.x-200, this.center.y+50, 300)
 		ellipse(this.center.x, this.center.y+50, 300)
 		ellipse(this.center.x+200, this.center.y+50, 300)

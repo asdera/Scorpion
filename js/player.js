@@ -14,7 +14,7 @@ playerinit = {
   	nextPower: 0,
   	powerRate: 300, // 300,
   	nextUltimate: 0,
-  	ultimateRate: 1, // 300,
+  	ultimateRate: 1200, // 300,
   	maxHp: 10,
   	hp: 10,
   	effects: [],

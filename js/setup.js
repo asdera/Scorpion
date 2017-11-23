@@ -51,6 +51,7 @@ function init() {
 
 function start() {
 	spawner = Object.assign({}, spawnerinit);
+    spawner.world = random(["future", "nether"/*, "boreal"*/]) 
 	player = Object.assign({}, playerinit);
 	setPlayer();
 	menu.state = "ingame";

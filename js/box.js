@@ -133,10 +133,8 @@ function Enemy(body, colour, hp, speed, special={}) {
 
   this.damage = function(hit=1) {
     angleplus = random(0, 360)
-    if (hit > 3) {
-      for (var i = 0; i < min(20, floor(hit/2)); i++) {
-        particles.push(new Particle("line", this.body.position.x, this.body.position.y, 20, angleplus + i * (360 / min(20, floor(hit/2))), this.colour, {start: this.body.circleRadius}))
-      }
+    for (var i = 0; i < min(20, hit, this.hp); i++) {
+      particles.push(new Particle("line", this.body.position.x, this.body.position.y, 20, angleplus + i * (360 / min(20, hit, this.hp)), player.gun.colour, {start: this.body.circleRadius}))
     }
     this.hp -= hit
   }
@@ -177,6 +175,10 @@ function Enemy(body, colour, hp, speed, special={}) {
   }
 
   this.rip = function() {
+    angleplus = random([-1, 1]) * 20 + 180
+    for (var i = 0; i < this.body.vertices.length; i++) {
+      particles.push(new Particle("line", this.body.vertices[i].x, this.body.vertices[i].y, this.body.circleRadius/3*2, angleplus + i * (360 / this.body.vertices.length), this.colour, {glow: false}))
+    }
     World.remove(world, this.body);
     this.destroy = true;
   }
@@ -191,17 +193,22 @@ function Particle(type, x, y, length, angle, colour, special={}) {
   this.life = 0;
   this.time = length;
   this.colour = colour;
+  this.glow = (special.glow === undefined) ? true : special.glow;
   this.type = type;
   this.destroy = false;
   this.special = special;
   this.show = function() {
     this.life++;
-    stroke("white");
     strokeWeight(4);
-    shadowBlur(10);
-    shadowColor(this.colour);
+    if (this.glow) {
+      stroke("white");
+      shadowBlur(10);
+      shadowColor(this.colour);
+    } else {
+      stroke(this.colour)
+    }
 
-    line(this.x + sin(this.angle) * this.offset, this.y + cos(this.angle) * this.offset, this.x + sin(this.angle) * this.length, this.y + cos(this.angle) * this.length);
+    line(this.x + cos(this.angle) * this.offset, this.y + sin(this.angle) * this.offset, this.x + cos(this.angle) * this.length, this.y + sin(this.angle) * this.length);
     if (this.life > this.time) {
       this.destroy = true;
     } else if (this.life > this.time/2) {
@@ -211,7 +218,6 @@ function Particle(type, x, y, length, angle, colour, special={}) {
       this.offset += 1;
       this.length += 3;
     }
-    print(this.offset, this.length)
     shadowBlur(0)
   }
 }

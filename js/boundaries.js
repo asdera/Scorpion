@@ -47,7 +47,7 @@ boxyinit = {
 	},
 	fall: function() {
 		this.vel++;
-		this.y += this.vel/5;
+		this.y += this.vel/10;
 		player.y = this.y + 50;
 	},
 }

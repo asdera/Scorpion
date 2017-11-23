@@ -8,7 +8,7 @@ guns = {
 		normal: function(player) {
 			force = 0.2
 			ballsize = 30
-			damage = 12
+			damage = 6
 			bounce = 1
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage));
 			Body.applyForce(bullets[bullets.length-1].body, {x: player.x, y: player.y}, {x: sin(player.angle) * force, y: cos(player.angle) * force});
@@ -16,7 +16,7 @@ guns = {
 		power: function(player) {
 			force = 0.2
 			ballsize = 30
-			damage = 12
+			damage = 6
 			bounce = 1
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 				update: function(box) {
@@ -30,7 +30,7 @@ guns = {
 		ultimate: function(player) {
 			force = 0.1
 			ballsize = 30
-			damage = 12
+			damage = 6
 			bounce = 1
 			number = 12
 			for (var i = 0; i < number; i++) {
@@ -48,7 +48,7 @@ guns = {
 		normal: function(player) {
 			force = 0.1
 			ballsize = 20
-			damage = 6
+			damage = 3
 			bounce = 1
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage));
 			Body.applyForce(bullets[bullets.length-1].body, {x: player.x, y: player.y}, {x: sin(player.angle) * force, y: cos(player.angle) * force});
@@ -60,7 +60,7 @@ guns = {
 		power: function(player) {
 			force = 0.1
 			ballsize = 20
-			damage = 6
+			damage = 3
 			bounce = 1
 			number = 11
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage));
@@ -76,7 +76,7 @@ guns = {
 		ultimate: function(player) {
 			force = 0.05  
 			ballsize = 20
-			damage = 6
+			damage = 3
 			bounce = 1
 			number = 16
 			for (var i = 0; i < number; i++) {
@@ -101,7 +101,7 @@ guns = {
 		normal: function(player) {
 			force = 0.05
 			ballsize = 15
-			damage = 6
+			damage = 3
 			bounce = 0.8
 			minangle = -5
 			maxangle = 5
@@ -115,7 +115,7 @@ guns = {
 		power: function(player) {
 			force = 0.05  
 			ballsize = 15
-			damage = 6
+			damage = 3
 			bounce = 1
 			number = 6
 			minangle = -15
@@ -136,7 +136,7 @@ guns = {
 		ultimate: function(player) {
 			force = 0.1 
 			ballsize = 15
-			damage = 6
+			damage = 3
 			bounce = 1
 			number = 16
 			for (var i = 0; i < number; i++) {
@@ -168,7 +168,7 @@ guns = {
 		normal: function(player) {
 			force = 0.15
 			ballsize = 40
-			damage = 12
+			damage = 6
 			bounce = 1
 			bullets.push(new Bullet(Bodies.polygon(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, 3, ballsize, { restitution: bounce }), this.colour, damage));
 			Body.setAngularVelocity(bullets[bullets.length-1].body, random(-0.1, 0.1))
@@ -177,7 +177,7 @@ guns = {
 		power: function(player) {
 			force = 0.15
 			ballsize = 40
-			damage = 24
+			damage = 12
 			bounce = 1
 			bullets.push(new Bullet(Bodies.polygon(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, 3, ballsize, { restitution: bounce }), this.colour, damage, {
 				update: function(box) {
@@ -188,7 +188,7 @@ guns = {
 					if (box.hits >= 3) {
 						force = 0.05
 						ballsize = 30
-						damage = 6
+						damage = 3
 						bounce = 1
 						number = 6
 						for (var i = 0; i < number; i++) {
@@ -206,7 +206,7 @@ guns = {
 		ultimate: function(player) {
 			force = 0.15
 			ballsize = 40
-			damage = 24
+			damage = 12
 			bounce = 1
 			number = 12
 			for (var i = 0; i < number; i++) {
@@ -225,7 +225,7 @@ guns = {
 		normal: function(player) {
 			force = 0.3
 			ballsize = 8
-			damage = 8
+			damage = 4
 			bounce = 0.6
 			vertices = [
 				{x: player.x + cos(player.angle) * 3 * ballsize + sin(player.angle) * 4 * ballsize,
@@ -250,7 +250,7 @@ guns = {
 					if (pos.y > canvasheight/* && box.hits == 0*/) {
 						force = -0.115
 						ballsize = 20
-						damage = 16
+						damage = 8
 						bounce = 0.6
 						bullets.push(new Bullet(Bodies.circle(box.body.position.x, box.body.position.y, ballsize, { restitution: bounce }), player.gun.colour, damage));
 						Body.applyForce(bullets[bullets.length-1].body, {x: box.body.position.x, y: box.body.position.y}, {x: 0, y: force});
@@ -264,7 +264,7 @@ guns = {
 		power: function(player) {
 			force = 0.7
 			ballsize = 10
-			damage = 12
+			damage = 6
 			bounce = 0.6
 			vertices = [
 				{x: player.x + cos(player.angle) * 3 * ballsize + sin(player.angle) * 4 * ballsize,
@@ -289,7 +289,7 @@ guns = {
 					if (pos.y > canvasheight/* && box.hits == 0*/) {
 						force = -0.25
 						ballsize = 30
-						damage = 24
+						damage = 12
 						bounce = 0.6
 						number = 12
 						for (var i = 0; i < number; i++) {
@@ -307,7 +307,7 @@ guns = {
 		ultimate: function(player) {
 			force = 0.3
 			ballsize = 8
-			damage = 8
+			damage = 4
 			bounce = 0.6
 			number = 12
 			vertices = [
@@ -335,7 +335,7 @@ guns = {
 						if (pos.y > canvasheight/* && box.hits == 0*/) {
 							force = -0.115
 							ballsize = 20
-							damage = 16
+							damage = 8
 							bounce = 0.6
 							bullets.push(new Bullet(Bodies.circle(box.body.position.x, box.body.position.y, ballsize, { restitution: bounce }), player.gun.colour, damage));
 							Body.applyForce(bullets[bullets.length-1].body, {x: box.body.position.x, y: box.body.position.y}, {x: 0, y: force});
@@ -354,11 +354,11 @@ guns = {
 		normal: function(player) {
 			force = 0.15
 			ballsize = 25
-			damage = 6
+			damage = 3
 			bounce = 0.7
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 				onEnemy: function(box, meanie) {
-					damage = 6
+					damage = 3
 					minlength = canvaswidth
 					meanest = meanie
 					for (var i = 0; i < enemies.length; i++) {
@@ -387,11 +387,11 @@ guns = {
 		power: function(player) {
 			force = 0.25
 			ballsize = 35
-			damage = 6
+			damage = 3
 			bounce = 0.7
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 				onEnemy: function(box, meanie) {
-					damage = 6
+					damage = 3
 					for (var i = 0; i < enemies.length; i++) {
 						enemy = enemies[i];
 						if (getLength(meanie.body.position, enemy.body.position) != 0) {
@@ -415,7 +415,7 @@ guns = {
 			player.action(function() {
 				bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), player.gun.colour, damage, {
 					onEnemy: function(box, meanie) {
-						damage = 6
+						damage = 3
 						for (var i = 0; i < enemies.length; i++) {
 							enemy = enemies[i];
 							if (getLength(meanie.body.position, enemy.body.position) != 0) {
@@ -441,14 +441,14 @@ guns = {
 		ultimate: function(player) {
 			force = 0.15
 			ballsize = 25
-			damage = 6
+			damage = 3
 			bounce = 0.7
 			number = 12
 			for (var i = 0; i < number; i++) {
 				x = canvaswidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.circle(x, player.y - player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 					onEnemy: function(box, meanie) {
-						damage = 6
+						damage = 3
 						minlength = canvaswidth
 						meanest = meanie
 						for (var i = 0; i < enemies.length; i++) {
@@ -484,7 +484,7 @@ guns = {
 		normal: function(player) {
 			force = 0.15
 			ballsize = 25
-			damage = 6
+			damage = 2
 			bounce = 0.6
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 				onEnemy: function(box, meanie) {
@@ -506,7 +506,7 @@ guns = {
 		power: function(player) {
 			force = 0.05
 			ballsize = 10
-			damage = 6
+			damage = 2
 			bounce = 0.6
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 				onEnemy: function(box, meanie) {
@@ -529,7 +529,7 @@ guns = {
 		ultimate: function(player) {
 			force = 0.15
 			ballsize = 25
-			damage = 6
+			damage = 2
 			bounce = 0.6
 			number = 12
 			for (var i = 0; i < number; i++) {
@@ -561,7 +561,7 @@ guns = {
 		normal: function(player) {
 			force = 0.15
 			ballsize = 40
-			damage = 10
+			damage = 5
 			bounce = 1
 			bullets.push(new Bullet(Bodies.polygon(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, 4, ballsize, { restitution: bounce }), this.colour, damage, {
 				teleports: 0,
@@ -599,7 +599,7 @@ guns = {
 		ultimate: function(player) {
 			force = 0.15
 			ballsize = 40
-			damage = 24
+			damage = 5
 			bounce = 1
 			number = 12
 			for (var i = 0; i < number; i++) {
@@ -626,7 +626,7 @@ guns = {
 		normal: function(player) {
 			force = 0.2 
 			ballsize = 30
-			damage = 12
+			damage = 6
 			bounce = 1
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 				update: function(box) {
@@ -638,7 +638,7 @@ guns = {
 		power: function(player) {
 			force = 2
 			ballsize = 60
-			damage = 12
+			damage = 6
 			bounce = 1
 			bullets.push(new Bullet(Bodies.polygon(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, 8, ballsize, { restitution: bounce, density: 0.01 }), this.colour, damage, {
 				update: function(box) {
@@ -655,7 +655,7 @@ guns = {
 		ultimate: function(player) {
 			force = 0.1
 			ballsize = 30
-			damage = 12
+			damage = 6
 			bounce = 1
 			number = 12
 			for (var i = 0; i < number; i++) {
@@ -677,7 +677,7 @@ guns = {
 		normal: function(player) {
 			force = 0.2
 			ballsize = 10
-			damage = 14
+			damage = 7
 			bounce = 0.6
 			vertices = [
 				{x: player.x + cos(player.angle) * 1 * ballsize + sin(player.angle) * 4 * ballsize,
@@ -692,7 +692,7 @@ guns = {
 			bullets.push(new Bullet(Bodies.fromVertices(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, vertices, { restitution: bounce }), this.colour, damage, {
 				onEnemy: function(box, meanie) {
 					if (box.hits > 1) {
-						box.damage = 10;
+						box.damage = 5;
 					}
 				},
 			}));
@@ -702,7 +702,7 @@ guns = {
 		power: function(player) {
 			force = 0.48
 			ballsize = 10
-			damage = 80
+			damage = 40
 			bounce = 0.6
 			vertices = [
 				{x: player.x + cos(player.angle) * 1 * ballsize + sin(player.angle) * 4 * ballsize,
@@ -717,7 +717,7 @@ guns = {
 			bullets.push(new Bullet(Bodies.fromVertices(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, vertices, { restitution: bounce }), this.colour, damage, {
 				onEnemy: function(box, meanie) {
 					if (box.hits > 1) {
-						box.damage = 10;
+						box.damage = 5;
 					}
 				},
 				update: function(box) {
@@ -730,7 +730,7 @@ guns = {
 		ultimate: function(player) {
 			force = 0.2
 			ballsize = 10
-			damage = 14
+			damage = 7
 			bounce = 0.6
 			vertices = [
 				{x: player.x + cos(player.angle) * 1 * ballsize + sin(player.angle) * 4 * ballsize,
@@ -748,7 +748,7 @@ guns = {
 				bullets.push(new Bullet(Bodies.fromVertices(x, player.y - player.cannon.length, vertices, { restitution: bounce }), this.colour, damage, {
 					onEnemy: function(box, meanie) {
 						if (box.hits > 1) {
-							box.damage = 10;
+							box.damage = 5;
 						}
 					},
 				}));
