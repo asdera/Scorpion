@@ -57,6 +57,7 @@ function start() {
 	setPlayer();
 	menu.state = "ingame";
     menu.semistate = "pregame";
+    menu.tutorial = false;
 }
 
 function reset() {

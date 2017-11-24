@@ -1,4 +1,5 @@
 function draw() {
+	keyDown();
 	if (menu.glow) {
 		background(51, 130);
 	} else {
@@ -10,7 +11,6 @@ function draw() {
 	if (spawner.update) {
 		spawner.update();
 	}
-	keyDown();
 	for (var i = enemies.length - 1; i >= 0; i--) {
 		obj = enemies[i];
 		if (obj.destroy) {
@@ -91,42 +91,41 @@ menu = {
 		selected: "easy",
 		index: ["easy", "medium", "hard", "expert"],
 		easy: {
-			x: -500,
+			x: -450,
 			y: -50,
 			sides: 3,
+			angle: 0,
+			speed: 1,
+			hover: false,
+		},
+		medium: {
+			x: -450,
+			y: 40,
+			sides: 4,
 			angle: 0,
 			speed: 2,
 			hover: false,
 		},
-		medium: {
-			x: -500,
-			y: 40,
-			sides: 4,
-			angle: 0,
-			speed: 4,
-			hover: false,
-		},
 		hard: {
-			x: -500,
+			x: -450,
 			y: 130,
 			sides: 5,
 			angle: 0,
-			speed: 6,
+			speed: 3,
 			hover: false,
 		},
 		expert: {
-			x: -500,
+			x: -450,
 			y: 220,
 			sides: 6,
 			angle: 0,
-			speed: 8,
+			speed: 4,
 			hover: false
 		},
 	},
 	music: {
 		offsetWord: 60,
 		length: 250,
-		arrow: 60,
 		selected: "future",
 		index: ["future", "nether", "boreal"],
 		future: {
@@ -148,6 +147,29 @@ menu = {
 			hover: false
 		},
 		time: 0
+	},
+	icons: {
+		offsetWord: 100,
+		length: 120,
+		index: ["glow", "mute", "github"],
+		glow: {
+			x: -400,
+			y: 360,
+			hover: false,
+			press: false
+		},
+		mute: {
+			x: -150,
+			y: 360,
+			hover: false,
+			press: false
+		},
+		github: {
+			x: 100,
+			y: 360,
+			hover: false,
+			press: false
+		}
 	},
 	effects: [],
 	update: function() {
@@ -315,7 +337,7 @@ menu = {
 				shadowColor("white");
 			}
 			shadowBlur(20);
-			fill("lightgray");
+			fill("gray");
 			strokeWeight(10);
 
 			beginShape();
@@ -334,6 +356,52 @@ menu = {
 		    text(this.difficulty.index[i].charAt(0).toUpperCase() + this.difficulty.index[i].slice(1), this.center.x + difficultyShape.x + this.difficulty.offsetWord, this.center.y + difficultyShape.y);
 
 		    difficultyShape.angle += difficultyShape.speed;
+		}
+
+		// Option Buttons
+
+		// Music Buttons
+
+		for (i = 0; i < this.icons.index.length; i++) {
+			iconsShape = this.icons[this.icons.index[i]]
+
+			shadowBlur(20);
+			fill("gray");
+			strokeWeight(10);
+
+			if (iconsShape.press) {
+				shadowColor("yellow");
+			} else if (iconsShape.hover) {
+				shadowColor("red");
+			} else {
+				shadowColor("white");
+			}
+
+
+		    ellipse(this.center.x + iconsShape.x, this.center.y + iconsShape.y, this.icons.length)
+
+		    // stroke(iconsShape.colour)
+
+		    shadowBlur(0);
+		    // if (this.icons.index[i] == "future") {
+
+		    // } else if (this.icons.index[i] == "nether") {
+
+		    // } else if (this.icons.index[i] == "boreal") {
+
+		    // }
+
+		    noFill()
+		    ellipse(this.center.x + iconsShape.x, this.center.y + iconsShape.y, this.icons.length)
+
+		    stroke("white");
+		    shadowBlur(20);
+		    textSize(50);
+		    strokeWeight(0);
+		    fill("white");
+			textAlign(CENTER, CENTER);
+		    text(this.icons.index[i].charAt(0).toUpperCase() + this.icons.index[i].slice(1), this.center.x + iconsShape.x, this.center.y + iconsShape.y + this.icons.offsetWord);
+
 		}
 
 		// Play Button
@@ -380,7 +448,7 @@ menu = {
 		} else if (spawner.world == "nether") {
 			this.scorpion("#441515");
 		} else if (spawner.world == "boreal") {
-			this.scorpion("#154415");
+			this.scorpion("#081c12");
 		}
 		
 		if (this.score.display == "real") {
@@ -419,7 +487,7 @@ menu = {
 		rect(this.center.x-500, this.center.y, 200, 100)
 		rect(this.center.x-700, this.center.y+25, 200, 50)
 		rect(this.center.x-700, this.center.y-100, 50, 175)
-		quad(this.center.x-700, this.center.y-100, this.center.x-650, this.center.y-100, this.center.x-500, this.center.y-250, this.center.x-500, this.center.y-300);
+		quad(this.center.x-700, this.center.y-100, this.center.x-650, this.center.y-100, this.center.x-500, this.center.y-250, this.center.x-500, this.center.y-300)
 		rect(this.center.x-500, this.center.y-300, 150, 50)
 		rect(this.center.x-500, this.center.y-300, 50, 150)
 		rect(this.center.x-500, this.center.y-200, 150, 50)
@@ -483,7 +551,11 @@ menu = {
 
 tutorial = {
 	page: 1,
+	lastKey: "",
+	timer: 0,
+	keys: [],
 	init: function() {
+		menu.tutorial = true;
 		player = Object.assign({}, playerinit);
 		player.y += boxy.outline/4
 		player.gun = guns["bouncer"]
@@ -495,35 +567,74 @@ tutorial = {
 			minX: -80,
 			maxX: 80,
 		}
+		player.powerRate = player.fireRate;
+		player.ultimateRate = player.fireRate;
 	},
 	update: function() {
 		shadowColor("white")
-		this["page" + String(this.page)]()
-	},
-	page1: function() {
-		this.drawKey("↓", 325, -75);
-		this.drawKey("↑", 800, -75);
-		this.drawKey("A", 225, -75)
-		this.drawKey("D", 900, -75);
-		this.drawKey("←", 325, 50);
-		this.drawKey("→", 800, 50);
-		this.drawKey("Q", 225, 50);
-		this.drawKey("E", 900, 50);
+		this.drawKey("↓", 325, -75, "b");
+		this.drawKey("↑", 800, -75, "f");
+		this.drawKey("A", 225, -75, "b");
+		this.drawKey("D", 900, -75, "f");
+		this.drawKey("←", 325, 50, "q");
+		this.drawKey("→", 800, 50, "e");
+		this.drawKey("Q", 225, 50, "q");
+		this.drawKey("E", 900, 50, "e");
+		this.drawKey("\u2423", 300, 300, "s", 120, -40);
+		this.drawKey("J", 400, 300, "s");
+		this.drawKey("X", 525, 300, "p");
+		this.drawKey("K", 625, 300, "p");
+		this.drawKey("Z", 750, 300, "u");
+		this.drawKey("L", 850, 300, "u");
 		textAlign(CENTER, CENTER);
 		text("Movement", menu.center.x+600, menu.center.y-45)
 		text("Rotation", menu.center.x+600, menu.center.y+90)
-
-	},
-	drawKey: function(key, x, y) {
-		fill("gray");
+		text("Fire, Powershot, Ultimate", menu.center.x+650, menu.center.y+225)
+		push();
+		rotate(-32)
+		textSize(25);
+		text("Don't let the enemies", menu.center.x+200, menu.center.y+515)
+		text("reach the top of the screen", menu.center.x+200, menu.center.y+550)
+		pop();
+		noFill();
 		strokeWeight(5)
+		arc(menu.center.x+725, menu.center.y-300, 300, 300, 0, 140);
+		stroke("red")
+		shadowColor("red");
+		ellipse(menu.center.x+875, menu.center.y-400, 120);
+		shadowBlur(0);
+		ellipse(menu.center.x+875, menu.center.y-400, 60);
+		for (var i = 0; i < 12; i++) {
+			line(menu.center.x+875, menu.center.y-400, menu.center.x+875+sin(i*30)*60, menu.center.y-400+cos(i*30)*60);
+		}
+		player.nextPower += 1;
+		if (player.nextPower >= player.powerRate) {
+			player.nextPower = player.powerRate;
+		}
+		player.nextUltimate += 1;
+		if (player.nextUltimate >= player.ultimateRate) {
+			player.nextUltimate = player.ultimateRate;
+		}
+		if (this.timer > 0) {
+			this.timer--;
+		}
+	},
+	drawKey: function(key, x, y, control, size=50, keyY=0) {
+		strokeWeight(5);
 		shadowBlur(10);
+		if (this.keys.includes(control) || (this.lastKey == control && this.timer > 0)) {
+			shadowColor("yellow");
+			fill("red");
+		} else {
+			shadowColor("white");
+			fill("gray");
+		}
 		rect(menu.center.x+x, menu.center.y+y, 80, 80);
 
 		textAlign(CENTER, CENTER);
-	    textSize(50);
+	    textSize(size);
 	    strokeWeight(0);
 	    fill("white");
-		text(key, menu.center.x+x+40, menu.center.y+y+40)
+		text(key, menu.center.x+x+40, menu.center.y+y+40+keyY)
 	}
 }
