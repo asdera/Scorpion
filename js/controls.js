@@ -14,6 +14,14 @@ function mouseHovered() {
 				difficultyShape.hover = false;
 			}
 		}
+		for (i = 0; i < menu.music.index.length; i++) {
+			musicShape = menu.music[menu.music.index[i]]
+			if (getLength({x: mouseX, y: mouseY}, {x: menu.center.x + musicShape.x, y: menu.center.y + musicShape.y}) <= menu.music.length / 2) {
+				musicShape.hover = true;
+			} else {
+				musicShape.hover = false;
+			}
+		}
 		if (getLength({x: mouseX, y: mouseY}, {x: menu.center.x + menu.playButton.x, y: menu.center.y + menu.playButton.y}) <= menu.playButton.length) {
 			menu.playButton.hover = true;
 		} else {
@@ -35,6 +43,17 @@ function mousePressed() {
 			menu.playButton.press = true;
 		}
 	}
+	if (menu.state == "pregame") {
+		for (i = 0; i < menu.music.index.length; i++) {
+			musicShape = menu.music[menu.music.index[i]]
+			if (musicShape.hover) {
+				menu.music.selected = menu.music.index[i]
+			}
+		}
+		if (menu.playButton.hover) {
+			menu.playButton.press = true;
+		}
+	}
 	for (var i = 0; i < 4; i++) {
 		particles.push(new Particle("line", mouseX, mouseY, 30, i*90+45, "blue"))
 	}
@@ -49,7 +68,7 @@ function mouseReleased() {
 }
 
 function keyPressed() {
-	if (menu.state == "ingame") {
+	if (menu.state == "ingame" || menu.tutorial) {
 		if (keyCode == 80) {
 			// quick console.log
 			console.log(player)
@@ -90,7 +109,7 @@ function keyPressed() {
 }
 
 function keyDown() {
-	if (menu.state == "ingame") {
+	if (menu.state == "ingame" || menu.tutorial) {
 		if (keyIsDown(65) || keyIsDown(40)) {
 			// lunge to the left
 			player.velX -= player.speed;

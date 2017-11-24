@@ -47,11 +47,12 @@ function init() {
 	grounds = [];
     particles = [];
 	setBoundaries();
+    tutorial.init();
 }
 
 function start() {
 	spawner = Object.assign({}, spawnerinit);
-    spawner.world = random(["future", "nether"/*, "boreal"*/]) 
+    spawner.world = menu.music.selected;
 	player = Object.assign({}, playerinit);
 	setPlayer();
 	menu.state = "ingame";

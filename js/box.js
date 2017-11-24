@@ -124,9 +124,12 @@ function Enemy(body, colour, hp, speed, special={}) {
     }
 
     Body.translate(this.body, {x: 0, y: -this.speed});
-
-    if (!Matter.Bounds.contains(bounds, pos) || this.body.position.y <= boxy.height + boxy.y) {
+    
+    if (this.body.position.y <= boxy.height + boxy.y) {
       player.damage();
+      this.rip();
+    }
+    if (!Matter.Bounds.contains(bounds, pos) || this.body.position.y <= boxy.height + boxy.y) {
       this.rip();
     }
   }
@@ -163,6 +166,10 @@ function Enemy(body, colour, hp, speed, special={}) {
           player.nextPower += boxi.damage;
           if (player.nextPower >= player.powerRate) {
             player.nextPower = player.powerRate;
+          }
+          player.nextUltimate += boxi.damage;
+          if (player.nextUltimate >= player.ultimateRate) {
+            player.nextUltimate = player.ultimateRate;
           }
           this.nextHit = this.hitRate;
         }

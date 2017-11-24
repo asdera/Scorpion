@@ -57,6 +57,7 @@ function draw() {
 menu = {
 	state: "pregame",
 	semistate: "none",
+	tutorial: true,
 	glow: true,
 	fade: 1,
 	width: 500,
@@ -123,6 +124,29 @@ menu = {
 		},
 	},
 	music: {
+		offsetWord: 60,
+		length: 250,
+		arrow: 60,
+		selected: "future",
+		index: ["future", "nether", "boreal"],
+		future: {
+			x: -750,
+			y: -240,
+			colour: "navy",
+			hover: false,
+		},
+		nether: {
+			x: -750,
+			y: 50,
+			colour: "orangered",
+			hover: false,
+		},
+		boreal: {
+			x: -750,
+			y: 340,
+			colour: "green",
+			hover: false
+		},
 		time: 0
 	},
 	effects: [],
@@ -182,15 +206,101 @@ menu = {
 		// shadowColor("white");
   		// shadowBlur(20);
 		// rect(this.center.x-this.width, this.center.y-this.height, this.width*2, this.height*2);
-		this.tutorial();
 
 		fill("white");
 		textAlign(CENTER, CENTER);
 		shadowBlur(20);
 		shadowColor(this.title.colour);
 		textSize(180);
-		text("Scorpion", this.center.x, this.center.y - 200);
+		text("Scorpion", this.center.x, this.center.y - 225);
 		this.title.colour = changeHue(this.title.colour, 1)
+
+		// Music Buttons
+
+		for (i = 0; i < this.music.index.length; i++) {
+			musicShape = this.music[this.music.index[i]]
+
+			shadowBlur(20);
+			fill("gray");
+			strokeWeight(10);
+
+			if (this.music.index[i] == this.music.selected) {
+				shadowColor(musicShape.colour);
+				fill(musicShape.colour);
+			} else if (musicShape.hover) {
+				shadowColor("red");
+			} else {
+				shadowColor("white");
+			}
+
+
+		    ellipse(this.center.x + musicShape.x, this.center.y + musicShape.y, this.music.length)
+
+		    // stroke(musicShape.colour)
+
+		    shadowBlur(0);
+		    if (this.music.index[i] == "future") {
+		    	beginShape();
+				vertex(this.center.x + musicShape.x-125, this.center.y + musicShape.y);
+				vertex(this.center.x + musicShape.x-75, this.center.y + musicShape.y);
+				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-75);
+				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-75);
+				vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x+75, this.center.y + musicShape.y);
+				vertex(this.center.x + musicShape.x+125, this.center.y + musicShape.y);
+				endShape();
+		    } else if (this.music.index[i] == "nether") {
+		    	beginShape();
+				vertex(this.center.x + musicShape.x-125, this.center.y + musicShape.y);
+				vertex(this.center.x + musicShape.x-75, this.center.y + musicShape.y);
+				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-50);
+				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-75);
+				vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y-50);
+				vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y-50);
+				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-75);
+				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-50);
+				vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x+75, this.center.y + musicShape.y);
+				vertex(this.center.x + musicShape.x+125, this.center.y + musicShape.y);
+				endShape();
+		    } else if (this.music.index[i] == "boreal") {
+		    	beginShape();
+				vertex(this.center.x + musicShape.x-125, this.center.y + musicShape.y);
+				vertex(this.center.x + musicShape.x-75, this.center.y + musicShape.y);
+				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y-25);
+				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-25);
+				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-75);
+				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-75);
+				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-25);
+				vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y-25);
+				vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y+25);
+				vertex(this.center.x + musicShape.x+75, this.center.y + musicShape.y);
+				vertex(this.center.x + musicShape.x+125, this.center.y + musicShape.y);
+				endShape();
+		    }
+
+		    noFill()
+		    ellipse(this.center.x + musicShape.x, this.center.y + musicShape.y, this.music.length)
+
+		    stroke("white");
+		    shadowColor(musicShape.colour);
+		    shadowBlur(20);
+		    textSize(50);
+		    strokeWeight(0);
+		    fill("white");
+			textAlign(CENTER, CENTER);
+		    text(this.music.index[i].charAt(0).toUpperCase() + this.music.index[i].slice(1), this.center.x + musicShape.x, this.center.y + musicShape.y + this.music.offsetWord);
+
+		}
 
 		// Difficulty Buttons
 
@@ -250,6 +360,7 @@ menu = {
 	    triangle(this.center.x - this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y + this.playButton.arrow, this.center.x + this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y, this.center.x - this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y - this.playButton.arrow);
 		// trasforms
 		this.playButton.angle += 2;
+		tutorial.update();
 		shadowBlur(0);
 	},
 	ingame: function() {
@@ -297,9 +408,6 @@ menu = {
 	},
 	action: function(effect, time) {
     	this.effects.push({effect: effect, time: time})
-  	},
-  	tutorial: function() {
-
   	},
   	scorpion: function(colour) {
   		noStroke();
@@ -373,3 +481,49 @@ menu = {
 }
 
 
+tutorial = {
+	page: 1,
+	init: function() {
+		player = Object.assign({}, playerinit);
+		player.y += boxy.outline/4
+		player.gun = guns["bouncer"]
+		player.cannon = {
+			outline: 5,
+			bodysize: 90,
+			muzzle: 60,
+			length: 80,
+			minX: -80,
+			maxX: 80,
+		}
+	},
+	update: function() {
+		shadowColor("white")
+		this["page" + String(this.page)]()
+	},
+	page1: function() {
+		this.drawKey("↓", 325, -75);
+		this.drawKey("↑", 800, -75);
+		this.drawKey("A", 225, -75)
+		this.drawKey("D", 900, -75);
+		this.drawKey("←", 325, 50);
+		this.drawKey("→", 800, 50);
+		this.drawKey("Q", 225, 50);
+		this.drawKey("E", 900, 50);
+		textAlign(CENTER, CENTER);
+		text("Movement", menu.center.x+600, menu.center.y-45)
+		text("Rotation", menu.center.x+600, menu.center.y+90)
+
+	},
+	drawKey: function(key, x, y) {
+		fill("gray");
+		strokeWeight(5)
+		shadowBlur(10);
+		rect(menu.center.x+x, menu.center.y+y, 80, 80);
+
+		textAlign(CENTER, CENTER);
+	    textSize(50);
+	    strokeWeight(0);
+	    fill("white");
+		text(key, menu.center.x+x+40, menu.center.y+y+40)
+	}
+}

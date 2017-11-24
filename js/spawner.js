@@ -19,7 +19,7 @@ spawnerinit = {
 				if (dice < 0.1) {
 					colour = "#9a76bc"
 					hp = Math.floor(Math.random() * 3 * this.toughness);
-					radius = 50;
+					radius = 60;
 					number = 1;
 				} else if (dice < 0.2) {
 					colour = "#00ff90"
@@ -34,13 +34,13 @@ spawnerinit = {
 				} else if (dice < 0.4) {
 					colour = "#8200b2"
 					hp = Math.floor(Math.random() * 0.5 * this.toughness);
-					radius = 50;
+					radius = 60;
 					number = 10;
 				} else if (dice < 0.5) {
 					guntype = random(guns.index)
 					colour = guns[guntype].colour
 					hp = Math.floor(this.toughness);
-					radius = 50;
+					radius = 60;
 					special = {
 						gun: guntype,
 						outline: "blue",
@@ -57,7 +57,7 @@ spawnerinit = {
 				} else if (dice < 0.55) {
 					colour = "yellow"
 					hp = Math.floor(this.toughness/2);
-					radius = 50;
+					radius = 60;
 					special = {
 						outline: "#ff7700",
 						deathrattle: function(me) {
@@ -71,9 +71,9 @@ spawnerinit = {
 					}
 					number = 1;
 				} else {
-					colour = "#4380c1"
+					colour = "#0099ff"
 					hp = Math.floor(Math.random() * this.toughness);
-					radius = 50;
+					radius = 60;
 					number = 4;
 				}
 				
@@ -85,35 +85,35 @@ spawnerinit = {
 						tries++;
 					}
 					if (tries < this.maxtries) {
-						enemies.push(new Enemy(Bodies.circle(x, canvasheight + radius, radius, { isStatic: true }), colour, hp, 0.5, special))
+						enemies.push(new Enemy(Bodies.circle(x, canvasheight + radius, radius, { isStatic: true }), colour, hp+1, 0.5, special))
 					}
 				}
 			} else if (this.world == "nether") {
 				if (dice < 0.1) {
 					colour = "#420000"
-					hp = Math.floor(Math.random() * 2 * this.toughness);
-					radius = 40;
-					number = 1;
+					hp = Math.floor(Math.random() * this.toughness);
+					radius = 75;
+					number = 3;
 				} else if (dice < 0.2) {
 					colour = "#dd1860"
-					hp = Math.floor(Math.random() * 5 * this.toughness);
+					hp = Math.floor(Math.random() * 4 * this.toughness);
 					radius = 100;
 					number = 1;
 				} else if (dice < 0.3) {
 					colour = "#aa6600"
-					hp = Math.floor(Math.random() * 2.5 * this.toughness);
-					radius = 75;
+					hp = Math.floor(Math.random() * 2 * this.toughness);
+					radius = 100;
 					number = 2;
 				} else if (dice < 0.4) {
 					colour = "#ff6060"
 					hp = Math.floor(Math.random() * 0.5 * this.toughness);
-					radius = 50;
-					number = 5;
+					radius = 75;
+					number = 10;
 				} else if (dice < 0.5) {
 					guntype = random(guns.index)
 					colour = guns[guntype].colour
 					hp = Math.floor(this.toughness);
-					radius = 50;
+					radius = 60;
 					special = {
 						gun: guntype,
 						outline: "blue",
@@ -130,7 +130,7 @@ spawnerinit = {
 				} else if (dice < 0.55) {
 					colour = "#9b0000"
 					hp = Math.floor(this.toughness/2);
-					radius = 50;
+					radius = 60;
 					special = {
 						outline: "#ff7700",
 						deathrattle: function(me) {
@@ -168,8 +168,8 @@ spawnerinit = {
 				}*/ else {
 					colour = "#ff9900"
 					hp = Math.floor(Math.random() * this.toughness);
-					radius = 50;
-					number = 3;
+					radius = 75;
+					number = 5;
 					changingX = true;
 				}
 				
@@ -187,7 +187,7 @@ spawnerinit = {
 						tries++;
 					}
 					if (tries < this.maxtries) {
-						enemies.push(new Enemy(Bodies.circle(x, y, radius, { isStatic: true }), colour, hp, 0.7, special))
+						enemies.push(new Enemy(Bodies.circle(x, y, radius, { isStatic: true }), colour, hp+1, 0.7, special))
 					}
 				}
 			} else if (this.world == "boreal") {
@@ -260,7 +260,7 @@ spawnerinit = {
 						tries++;
 					}
 					if (tries < this.maxtries) {
-						enemies.push(new Enemy(Bodies.circle(x, canvasheight + radius, radius, { isStatic: true }), colour, hp, 0.3, special))
+						enemies.push(new Enemy(Bodies.circle(x, canvasheight + radius, radius, { isStatic: true }), colour, hp+1, 0.3, special))
 					}
 				}
 			}
