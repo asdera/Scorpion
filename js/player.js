@@ -1,5 +1,5 @@
 playerinit = {
-	x: canvaswidth/2,
+	x: canvasWidth/2,
 	y: 50,
 	angle: 0,
 	speed: 1,
@@ -107,7 +107,7 @@ playerinit = {
 	damage: function(hit=1) {
 		for (var i = 0; i < hit; i++) {
 			player.hp--;
-			bullets.push(new Bullet(Bodies.rectangle((player.hp + 0.5) / player.maxHp * (canvaswidth - boxy.outline*2) + boxy.outline, (boxy.height - boxy.outline) / 2, (canvaswidth - boxy.outline) / player.maxHp, boxy.height - boxy.outline/2, { restitution: 1 }), "#ffbaba", 25, {
+			bullets.push(new Bullet(Bodies.rectangle((player.hp + 0.5) / player.maxHp * (canvasWidth - boxy.outline*2) + boxy.outline, (boxy.height - boxy.outline) / 2, (canvasWidth - boxy.outline) / player.maxHp, boxy.height - boxy.outline/2, { restitution: 1 }), "#ffbaba", 25, {
 				outline: "red",
 				behind: true,
 				thickness: boxy.outline

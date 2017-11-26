@@ -15,12 +15,19 @@ var bullets;
 var particles;
 var grounds;
 var bounds;
-const ratio = 1800/900;
-const canvasPadding = 60
-const canvaswidth = window.innerWidth-canvasPadding*2;
-const canvasheight = canvaswidth/ratio;
+var canvasWidthPadding = 60;
+var canvasHeightPadding = 20;
+var canvasWidth = 2000;
+var canvasHeight = 1000;
+var canvasZoom = 1;
 var game = {};
 var ctx;
+// var wavesurfer = WaveSurfer.create({
+//     container: '#waveform',
+//     waveColor: 'violet',
+//     progressColor: 'purple'
+// });
+// wavesurfer.load("audio/future.mp3");
 
 function preload() {
 	// myFont = loadFont("libraries/Gravedigger.otf");
@@ -28,12 +35,17 @@ function preload() {
 
 function setup() {
 	textFont("Trebuchet MS");
-	createCanvas(canvaswidth, canvasheight);
+    widthRatio = (windowWidth - canvasWidthPadding*2)/canvasWidth
+    heightRatio = (windowHeight - canvasHeightPadding*2)/canvasHeight
+    canvasZoom = min(widthRatio, heightRatio);
+    document.body.style.zoom = canvasZoom;
+	canvasElement = createCanvas(canvasWidth, canvasHeight);
 	ctx = canvas.getContext('2d');
 	engine = Engine.create();
 	world = engine.world;
 	Engine.run(engine);
 	angleMode(DEGREES);
+    menu.music.selected = random(menu.music.index);
 	init();
 	// start();
 }
@@ -67,7 +79,7 @@ function reset() {
 
 function clearWorld() {
 	Matter.World.clear(world, false);
-	setup();
+	init();
 }
 
 function getLength(pos1, pos2) {

@@ -59,6 +59,7 @@ menu = {
 	semistate: "none",
 	tutorial: true,
 	glow: true,
+	beat: 2,
 	fade: 1,
 	width: 500,
 	height: 300,
@@ -66,8 +67,8 @@ menu = {
 		colour: "#0000ff"
 	},
 	center: {
-		x: canvaswidth/2,
-		y: canvasheight/2
+		x: canvasWidth/2,
+		y: canvasHeight/2
 	},
 	score: {
 		fake: 0,
@@ -88,10 +89,10 @@ menu = {
 		offsetWord: 50,
 		length: 30,
 		arrow: 60,
-		selected: "easy",
+		selected: "medium",
 		index: ["easy", "medium", "hard", "expert"],
 		easy: {
-			x: -450,
+			x: -500,
 			y: -50,
 			sides: 3,
 			angle: 0,
@@ -99,7 +100,7 @@ menu = {
 			hover: false,
 		},
 		medium: {
-			x: -450,
+			x: -500,
 			y: 40,
 			sides: 4,
 			angle: 0,
@@ -107,7 +108,7 @@ menu = {
 			hover: false,
 		},
 		hard: {
-			x: -450,
+			x: -500,
 			y: 130,
 			sides: 5,
 			angle: 0,
@@ -115,7 +116,7 @@ menu = {
 			hover: false,
 		},
 		expert: {
-			x: -450,
+			x: -500,
 			y: 220,
 			sides: 6,
 			angle: 0,
@@ -153,22 +154,61 @@ menu = {
 		length: 120,
 		index: ["glow", "mute", "github"],
 		glow: {
-			x: -400,
+			x: -300,
 			y: 360,
 			hover: false,
 			press: false
 		},
 		mute: {
-			x: -150,
+			x: 0,
 			y: 360,
 			hover: false,
 			press: false
 		},
 		github: {
-			x: 100,
+			x: 300,
 			y: 360,
 			hover: false,
 			press: false
+		}
+	},
+	leftSide: {
+		show: false,
+		open: {
+			x: -920,
+			y: 90,
+			offsetArrow: 10,
+			arrow: 50,
+			hover: false,
+			press: false,
+		},
+		close: {
+			x: -180,
+			y: 250,
+			offsetArrow: -10,
+			arrow: -30,
+			hover: false,
+			press: false,
+		}
+		
+	},
+	rightSide: {
+		show: false,
+		open: {
+			x: 920,
+			y: 90,
+			offsetArrow: -10,
+			arrow: -50,
+			hover: false,
+			press: false,
+		},
+		close: {
+			x: 180,
+			y: 250,
+			offsetArrow: 10,
+			arrow: 30,
+			hover: false,
+			press: false,
 		}
 	},
 	effects: [],
@@ -213,11 +253,15 @@ menu = {
 			noFill();
 			stroke("blue")
 			strokeWeight(2);
-			beat = 40 * sin(this.music.time*9) + 40;
-			strength = beat/20;
-			shadowBlur(beat);
-			rect(-1, -1, canvaswidth+2, canvasheight+2);
+			this.beat = 2 * sin(this.music.time*9) + 2;
+			shadowBlur(30 * this.beat);
+			rect(-1, -1, canvasWidth+2, canvasHeight+2);
+			shadowBlur(20 * this.beat);
+			rect(-1, -1, canvasWidth+2, canvasHeight+2);
+			
 			shadowBlur(0);
+		} else {
+			this.beat = 1;
 		}
 		this.music.time++;
 	},
@@ -237,130 +281,209 @@ menu = {
 		text("Scorpion", this.center.x, this.center.y - 225);
 		this.title.colour = changeHue(this.title.colour, 1)
 
-		// Music Buttons
+		if (this.leftSide.show) {
+			// Music Buttons
 
-		for (i = 0; i < this.music.index.length; i++) {
-			musicShape = this.music[this.music.index[i]]
+			for (i = 0; i < this.music.index.length; i++) {
+				musicShape = this.music[this.music.index[i]]
 
-			shadowBlur(20);
-			fill("gray");
-			strokeWeight(10);
+				shadowBlur(20);
+				fill("gray");
+				strokeWeight(10);
 
-			if (this.music.index[i] == this.music.selected) {
-				shadowColor(musicShape.colour);
-				fill(musicShape.colour);
-			} else if (musicShape.hover) {
+				if (this.music.index[i] == this.music.selected) {
+					shadowColor(musicShape.colour);
+					fill(musicShape.colour);
+				} else if (musicShape.hover) {
+					shadowColor("red");
+				} else {
+					shadowColor("white");
+				}
+
+
+			    ellipse(this.center.x + musicShape.x, this.center.y + musicShape.y, this.music.length)
+
+			    // stroke(musicShape.colour)
+
+			    shadowBlur(0);
+			    if (this.music.index[i] == "future") {
+			    	beginShape();
+					vertex(this.center.x + musicShape.x-125, this.center.y + musicShape.y);
+					vertex(this.center.x + musicShape.x-75, this.center.y + musicShape.y);
+					vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-75);
+					vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-75);
+					vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x+75, this.center.y + musicShape.y);
+					vertex(this.center.x + musicShape.x+125, this.center.y + musicShape.y);
+					endShape();
+			    } else if (this.music.index[i] == "nether") {
+			    	beginShape();
+					vertex(this.center.x + musicShape.x-125, this.center.y + musicShape.y);
+					vertex(this.center.x + musicShape.x-75, this.center.y + musicShape.y);
+					vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-50);
+					vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-75);
+					vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y-50);
+					vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y-50);
+					vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-75);
+					vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-50);
+					vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x+75, this.center.y + musicShape.y);
+					vertex(this.center.x + musicShape.x+125, this.center.y + musicShape.y);
+					endShape();
+			    } else if (this.music.index[i] == "boreal") {
+			    	beginShape();
+					vertex(this.center.x + musicShape.x-125, this.center.y + musicShape.y);
+					vertex(this.center.x + musicShape.x-75, this.center.y + musicShape.y);
+					vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y-25);
+					vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-25);
+					vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-75);
+					vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-75);
+					vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-25);
+					vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y-25);
+					vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y+25);
+					vertex(this.center.x + musicShape.x+75, this.center.y + musicShape.y);
+					vertex(this.center.x + musicShape.x+125, this.center.y + musicShape.y);
+					endShape();
+			    }
+
+			    noFill()
+			    ellipse(this.center.x + musicShape.x, this.center.y + musicShape.y, this.music.length)
+
+			    stroke("white");
+			    shadowColor(musicShape.colour);
+			    shadowBlur(20);
+			    textSize(50);
+			    strokeWeight(0);
+			    fill("white");
+				textAlign(CENTER, CENTER);
+			    text(this.music.index[i].charAt(0).toUpperCase() + this.music.index[i].slice(1), this.center.x + musicShape.x, this.center.y + musicShape.y + this.music.offsetWord);
+
+			}
+
+			// Difficulty Buttons
+
+			for (i = 0; i < this.difficulty.index.length; i++) {
+				difficultyShape = this.difficulty[this.difficulty.index[i]]
+
+				if (this.difficulty.index[i] == this.difficulty.selected) {
+					shadowColor("yellow");
+				} else if (difficultyShape.hover) {
+					shadowColor("red");
+				} else {
+					shadowColor("white");
+				}
+				shadowBlur(20);
+				fill("gray");
+				strokeWeight(10);
+
+				beginShape();
+			    for (j = 0; j < difficultyShape.sides; j++) {
+			    	px = this.center.x + difficultyShape.x + cos(j * 360 / difficultyShape.sides + difficultyShape.angle) * this.difficulty.length;
+			        py = this.center.y + difficultyShape.y + sin(j * 360 / difficultyShape.sides + difficultyShape.angle) * this.difficulty.length;
+			        vertex(px, py);
+			    }
+			    endShape(CLOSE);
+
+			    shadowBlur(10);
+			    textSize(50);
+			    strokeWeight(0);
+			    fill("white");
+				textAlign(LEFT, CENTER);
+			    text(this.difficulty.index[i].charAt(0).toUpperCase() + this.difficulty.index[i].slice(1), this.center.x + difficultyShape.x + this.difficulty.offsetWord, this.center.y + difficultyShape.y);
+
+			    difficultyShape.angle += difficultyShape.speed;
+			}
+
+			// Arrows
+
+			strokeWeight(5);
+			fill("blue");
+	    	stroke("white");
+			shadowBlur(10);
+
+			if (this.leftSide.close.press) {
+				shadowColor("yellow");
+			} else if (this.leftSide.close.hover) {
 				shadowColor("red");
 			} else {
 				shadowColor("white");
 			}
 
+			triangle(this.center.x - this.leftSide.close.arrow + this.leftSide.close.offsetArrow + this.leftSide.close.x, this.center.y + this.leftSide.close.y + this.leftSide.close.arrow, this.center.x + this.leftSide.close.arrow + this.leftSide.close.offsetArrow + this.leftSide.close.x, this.center.y + this.leftSide.close.y, this.center.x - this.leftSide.close.arrow + this.leftSide.close.offsetArrow + this.leftSide.close.x, this.center.y + this.leftSide.close.y - this.leftSide.close.arrow);
 
-		    ellipse(this.center.x + musicShape.x, this.center.y + musicShape.y, this.music.length)
+		} else {
 
-		    // stroke(musicShape.colour)
-
-		    shadowBlur(0);
-		    if (this.music.index[i] == "future") {
-		    	beginShape();
-				vertex(this.center.x + musicShape.x-125, this.center.y + musicShape.y);
-				vertex(this.center.x + musicShape.x-75, this.center.y + musicShape.y);
-				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-75);
-				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-75);
-				vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x+75, this.center.y + musicShape.y);
-				vertex(this.center.x + musicShape.x+125, this.center.y + musicShape.y);
-				endShape();
-		    } else if (this.music.index[i] == "nether") {
-		    	beginShape();
-				vertex(this.center.x + musicShape.x-125, this.center.y + musicShape.y);
-				vertex(this.center.x + musicShape.x-75, this.center.y + musicShape.y);
-				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-50);
-				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-75);
-				vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y-50);
-				vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y-50);
-				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-75);
-				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-50);
-				vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x+75, this.center.y + musicShape.y);
-				vertex(this.center.x + musicShape.x+125, this.center.y + musicShape.y);
-				endShape();
-		    } else if (this.music.index[i] == "boreal") {
-		    	beginShape();
-				vertex(this.center.x + musicShape.x-125, this.center.y + musicShape.y);
-				vertex(this.center.x + musicShape.x-75, this.center.y + musicShape.y);
-				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x-25, this.center.y + musicShape.y-25);
-				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-25);
-				vertex(this.center.x + musicShape.x-50, this.center.y + musicShape.y-75);
-				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-75);
-				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y-25);
-				vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y-25);
-				vertex(this.center.x + musicShape.x+25, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x+50, this.center.y + musicShape.y+25);
-				vertex(this.center.x + musicShape.x+75, this.center.y + musicShape.y);
-				vertex(this.center.x + musicShape.x+125, this.center.y + musicShape.y);
-				endShape();
-		    }
-
-		    noFill()
-		    ellipse(this.center.x + musicShape.x, this.center.y + musicShape.y, this.music.length)
-
-		    stroke("white");
-		    shadowColor(musicShape.colour);
-		    shadowBlur(20);
-		    textSize(50);
-		    strokeWeight(0);
-		    fill("white");
+			fill("blue");
+	    	stroke("white");
+			shadowBlur(10);
+			strokeWeight(5);
+			textSize(80);
 			textAlign(CENTER, CENTER);
-		    text(this.music.index[i].charAt(0).toUpperCase() + this.music.index[i].slice(1), this.center.x + musicShape.x, this.center.y + musicShape.y + this.music.offsetWord);
 
+			if (this.leftSide.open.press) {
+				shadowColor("yellow");
+			} else if (this.leftSide.open.hover) {
+				shadowColor("red");
+			} else {
+				shadowColor("white");
+			}
+
+			text("Game Settings", this.center.x + this.leftSide.open.x + 400, this.center.y + this.leftSide.open.y)
+
+			triangle(this.center.x - this.leftSide.open.arrow + this.leftSide.open.offsetArrow + this.leftSide.open.x, this.center.y + this.leftSide.open.y + this.leftSide.open.arrow, this.center.x + this.leftSide.open.arrow + this.leftSide.open.offsetArrow + this.leftSide.open.x, this.center.y + this.leftSide.open.y, this.center.x - this.leftSide.open.arrow + this.leftSide.open.offsetArrow + this.leftSide.open.x, this.center.y + this.leftSide.open.y - this.leftSide.open.arrow);
 		}
 
-		// Difficulty Buttons
+		if (this.rightSide.show) {
+			tutorial.update();
 
-		for (i = 0; i < this.difficulty.index.length; i++) {
-			difficultyShape = this.difficulty[this.difficulty.index[i]]
+			// Arrows
 
-			if (this.difficulty.index[i] == this.difficulty.selected) {
+			fill("blue");
+	    	stroke("white");
+			shadowBlur(10);
+			strokeWeight(5);
+
+			if (this.rightSide.close.press) {
 				shadowColor("yellow");
-			} else if (difficultyShape.hover) {
+			} else if (this.rightSide.close.hover) {
 				shadowColor("red");
 			} else {
 				shadowColor("white");
 			}
-			shadowBlur(20);
-			fill("gray");
-			strokeWeight(10);
 
-			beginShape();
-		    for (j = 0; j < difficultyShape.sides; j++) {
-		    	px = this.center.x + difficultyShape.x + cos(j * 360 / difficultyShape.sides + difficultyShape.angle) * this.difficulty.length;
-		        py = this.center.y + difficultyShape.y + sin(j * 360 / difficultyShape.sides + difficultyShape.angle) * this.difficulty.length;
-		        vertex(px, py);
-		    }
-		    endShape(CLOSE);
+			triangle(this.center.x - this.rightSide.close.arrow + this.rightSide.close.offsetArrow + this.rightSide.close.x, this.center.y + this.rightSide.close.y + this.rightSide.close.arrow, this.center.x + this.rightSide.close.arrow + this.rightSide.close.offsetArrow + this.rightSide.close.x, this.center.y + this.rightSide.close.y, this.center.x - this.rightSide.close.arrow + this.rightSide.close.offsetArrow + this.rightSide.close.x, this.center.y + this.rightSide.close.y - this.rightSide.close.arrow);
+		} else {
 
-		    shadowBlur(10);
-		    textSize(50);
-		    strokeWeight(0);
-		    fill("white");
-			textAlign(LEFT, CENTER);
-		    text(this.difficulty.index[i].charAt(0).toUpperCase() + this.difficulty.index[i].slice(1), this.center.x + difficultyShape.x + this.difficulty.offsetWord, this.center.y + difficultyShape.y);
+			fill("blue");
+	    	stroke("white");
+			shadowBlur(10);
+			strokeWeight(5);
+			textSize(80);
+			textAlign(CENTER, CENTER);
 
-		    difficultyShape.angle += difficultyShape.speed;
+			if (this.rightSide.open.press) {
+				shadowColor("yellow");
+			} else if (this.rightSide.open.hover) {
+				shadowColor("red");
+			} else {
+				shadowColor("white");
+			}
+
+			text("Controls", this.center.x + this.rightSide.open.x - 400, this.center.y + this.rightSide.open.y)
+
+			triangle(this.center.x - this.rightSide.open.arrow + this.rightSide.open.offsetArrow + this.rightSide.open.x, this.center.y + this.rightSide.open.y + this.rightSide.open.arrow, this.center.x + this.rightSide.open.arrow + this.rightSide.open.offsetArrow + this.rightSide.open.x, this.center.y + this.rightSide.open.y, this.center.x - this.rightSide.open.arrow + this.rightSide.open.offsetArrow + this.rightSide.open.x, this.center.y + this.rightSide.open.y - this.rightSide.open.arrow);
 		}
 
 		// Option Buttons
-
-		// Music Buttons
 
 		for (i = 0; i < this.icons.index.length; i++) {
 			iconsShape = this.icons[this.icons.index[i]]
@@ -377,31 +500,64 @@ menu = {
 				shadowColor("white");
 			}
 
-
 		    ellipse(this.center.x + iconsShape.x, this.center.y + iconsShape.y, this.icons.length)
 
 		    // stroke(iconsShape.colour)
 
 		    shadowBlur(0);
-		    // if (this.icons.index[i] == "future") {
 
-		    // } else if (this.icons.index[i] == "nether") {
-
-		    // } else if (this.icons.index[i] == "boreal") {
-
-		    // }
-
-		    noFill()
-		    ellipse(this.center.x + iconsShape.x, this.center.y + iconsShape.y, this.icons.length)
+		    if (this.icons.index[i] == "glow") {
+		    	stroke("yellow");
+		    	for (var g = 0; g < 8; g++) {
+			    	gx = this.center.x + iconsShape.x + cos(g * 45) * 30;
+			        gy = this.center.y + iconsShape.y + sin(g * 45) * 30;
+			        ex = this.center.x + iconsShape.x + cos(g * 45) * 40;
+			        ey = this.center.y + iconsShape.y + sin(g * 45) * 40;
+			        line(gx, gy, ex, ey)
+		    	}
+		    	ellipse(this.center.x + iconsShape.x, this.center.y + iconsShape.y, 25)
+		    } else if (this.icons.index[i] == "mute") {
+		    	stroke("brown");
+		    	for (var g = 0; g < 3; g++) {
+			    	gx = this.center.x + iconsShape.x + cos((g-1) * 45) * 30;
+			        gy = this.center.y + iconsShape.y + sin((g-1) * 45) * 30;
+			        ex = this.center.x + iconsShape.x + cos((g-1) * 45) * 40;
+			        ey = this.center.y + iconsShape.y + sin((g-1) * 45) * 40;
+			        line(gx, gy, ex, ey)
+		    	}
+		    	quad(this.center.x + iconsShape.x-30, this.center.y + iconsShape.y-20, 
+		    		this.center.x + iconsShape.x, this.center.y + iconsShape.y-30, 
+		    		this.center.x + iconsShape.x, this.center.y + iconsShape.y+30, 
+		    		this.center.x + iconsShape.x-30, this.center.y + iconsShape.y+20)
+		    } else if (this.icons.index[i] == "github") {
+		    	stroke("black");
+		    	ellipse(this.center.x + iconsShape.x, this.center.y + iconsShape.y, 70, 50)
+		    	line(this.center.x + iconsShape.x-30, this.center.y + iconsShape.y-30, this.center.x + iconsShape.x-25, this.center.y + iconsShape.y-22)
+		    	line(this.center.x + iconsShape.x+30, this.center.y + iconsShape.y-30, this.center.x + iconsShape.x+25, this.center.y + iconsShape.y-22)
+		    	line(this.center.x + iconsShape.x+15, this.center.y + iconsShape.y+25, this.center.x + iconsShape.x+15, this.center.y + iconsShape.y+50)
+		    	line(this.center.x + iconsShape.x-15, this.center.y + iconsShape.y+25, this.center.x + iconsShape.x-15, this.center.y + iconsShape.y+50)
+		    	// line(gx, gy, ex, ey)
+		    }
 
 		    stroke("white");
+
+		    if (iconsShape.press) {
+				shadowColor("yellow");
+			} else if (iconsShape.hover) {
+				shadowColor("red");
+			} else {
+				shadowColor("white");
+			}
+		    
+			noFill();
+			ellipse(this.center.x + iconsShape.x, this.center.y + iconsShape.y, this.icons.length)
+
 		    shadowBlur(20);
 		    textSize(50);
 		    strokeWeight(0);
 		    fill("white");
 			textAlign(CENTER, CENTER);
 		    text(this.icons.index[i].charAt(0).toUpperCase() + this.icons.index[i].slice(1), this.center.x + iconsShape.x, this.center.y + iconsShape.y + this.icons.offsetWord);
-
 		}
 
 		// Play Button
@@ -424,11 +580,11 @@ menu = {
 	        vertex(px, py);
 	    }
 	    endShape(CLOSE);
-	    fill("white");
+	    fill("red");
+	    stroke("white");
 	    triangle(this.center.x - this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y + this.playButton.arrow, this.center.x + this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y, this.center.x - this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y - this.playButton.arrow);
 		// trasforms
 		this.playButton.angle += 2;
-		tutorial.update();
 		shadowBlur(0);
 	},
 	ingame: function() {
@@ -580,16 +736,18 @@ tutorial = {
 		this.drawKey("→", 800, 50, "e");
 		this.drawKey("Q", 225, 50, "q");
 		this.drawKey("E", 900, 50, "e");
-		this.drawKey("\u2423", 300, 300, "s", 120, -40);
-		this.drawKey("J", 400, 300, "s");
-		this.drawKey("X", 525, 300, "p");
-		this.drawKey("K", 625, 300, "p");
-		this.drawKey("Z", 750, 300, "u");
-		this.drawKey("L", 850, 300, "u");
+		this.drawKey("\u2423", 800, 175, "s", 100, -40);
+		this.drawKey("J", 900, 175, "s");
+		this.drawKey("X", 800, 275, "p");
+		this.drawKey("K", 900, 275, "p");
+		this.drawKey("Z", 800, 375, "u");
+		this.drawKey("L", 900, 375, "u");
 		textAlign(CENTER, CENTER);
 		text("Movement", menu.center.x+600, menu.center.y-45)
 		text("Rotation", menu.center.x+600, menu.center.y+90)
-		text("Fire, Powershot, Ultimate", menu.center.x+650, menu.center.y+225)
+		text("Fire", menu.center.x+600, menu.center.y+215)
+		text("Powershot", menu.center.x+600, menu.center.y+315)
+		text("Ultimate", menu.center.x+600, menu.center.y+415)
 		push();
 		rotate(-32)
 		textSize(25);

@@ -1,10 +1,10 @@
 function setBoundaries() {
 	edge = 100
-	// grounds.push(new Ground(Bodies.rectangle(canvaswidth/2, canvasheight + edge/2, canvaswidth, edge, { isStatic: true })));
-	grounds.push(new Ground(Bodies.rectangle(-edge/2, canvasheight/2, edge, canvasheight * 10, { isStatic: true })));
-	grounds.push(new Ground(Bodies.rectangle(canvaswidth + edge/2, canvasheight/2, edge, canvasheight * 10, { isStatic: true })));
+	// grounds.push(new Ground(Bodies.rectangle(canvasWidth/2, canvasHeight + edge/2, canvasWidth, edge, { isStatic: true })));
+	grounds.push(new Ground(Bodies.rectangle(-edge/2, canvasHeight/2, edge, canvasHeight * 10, { isStatic: true })));
+	grounds.push(new Ground(Bodies.rectangle(canvasWidth + edge/2, canvasHeight/2, edge, canvasHeight * 10, { isStatic: true })));
 
-	bounds = Matter.Bounds.create([{x: -1000, y: -canvasheight}, {x: canvaswidth + 1000, y: canvasheight * 2}])
+	bounds = Matter.Bounds.create([{x: -1000, y: -canvasHeight}, {x: canvasWidth + 1000, y: canvasHeight * 2}])
 }
 
 
@@ -14,7 +14,7 @@ boxyinit = {
 	outline: 10,
 	strips: 7,
 	minX: 45,
-	maxX: canvaswidth-45,
+	maxX: canvasWidth-45,
 	vel: -60,
 	update: function() {
 		// if () {
@@ -24,15 +24,15 @@ boxyinit = {
 		stroke("red");
 		strokeWeight(this.outline);
 		fill("lightgray");
-		rect(this.outline/2, this.y + this.outline/2, canvaswidth - this.outline, this.height - this.outline/2);
+		rect(this.outline/2, this.y + this.outline/2, canvasWidth - this.outline, this.height - this.outline/2);
 		fill("#ffbaba");
-		rect(this.outline/2, this.y + this.outline/2, player.hp / player.maxHp * (canvaswidth - this.outline), this.height - this.outline/2);
+		rect(this.outline/2, this.y + this.outline/2, player.hp / player.maxHp * (canvasWidth - this.outline), this.height - this.outline/2);
 	},
 	afterupdate: function() {stroke("gray");
 		stroke("white");
 		strokeWeight(this.outline);
 		for (var i = this.strips - 1; i >= 0; i--) {
-			line(i*canvaswidth/this.strips, this.y + this.outline/2, (i+1)*canvaswidth/this.strips, this.y + this.height)
+			line(i*canvasWidth/this.strips, this.y + this.outline/2, (i+1)*canvasWidth/this.strips, this.y + this.height)
 		}
 		if (menu.state == "ingame" && !menu.glow && player.nextUltimate == player.ultimateRate) {
 			stroke("yellow");
@@ -42,7 +42,7 @@ boxyinit = {
 			shadowColor("red");
 		}
       	shadowBlur(20);
-		rect(this.outline/2, this.y + this.outline/2, canvaswidth - this.outline, this.height - this.outline/2);
+		rect(this.outline/2, this.y + this.outline/2, canvasWidth - this.outline, this.height - this.outline/2);
 		ctx.shadowBlur = 0;
 	},
 	fall: function() {

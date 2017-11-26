@@ -34,7 +34,7 @@ guns = {
 			bounce = 1
 			number = 12
 			for (var i = 0; i < number; i++) {
-				x = canvaswidth / number * (i+0.5)
+				x = canvasWidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.circle(x, player.y - player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage));
 				Body.applyForce(bullets[bullets.length-1].body, {x: x, y: player.y}, {x: 0, y: force});
 			}
@@ -80,13 +80,13 @@ guns = {
 			bounce = 1
 			number = 16
 			for (var i = 0; i < number; i++) {
-				x = canvaswidth / number * (i+0.5)
+				x = canvasWidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.circle(x, player.y - player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage));
 				Body.applyForce(bullets[bullets.length-1].body, {x: x, y: player.y}, {x: 0, y: force});
 			}
 			player.action(function() {
 				for (var i = 0; i < number; i++) {
-					x = canvaswidth / number * (i+0.5)
+					x = canvasWidth / number * (i+0.5)
 					bullets.push(new Bullet(Bodies.circle(x, player.y - player.cannon.length, ballsize, { restitution: bounce }), player.gun.colour, damage));
 					Body.applyForce(bullets[bullets.length-1].body, {x: x, y: player.y}, {x: 0, y: force});
 				}
@@ -140,20 +140,20 @@ guns = {
 			bounce = 1
 			number = 16
 			for (var i = 0; i < number; i++) {
-				x = canvaswidth / number * (i+0.5)
+				x = canvasWidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.circle(x, player.y - player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage));
 				Body.applyForce(bullets[bullets.length-1].body, {x: x, y: player.y}, {x: 0, y: force});
 			}
 			player.action(function() {
 				for (var i = 0; i < number; i++) {
-					x = canvaswidth / number * (i+0.5)
+					x = canvasWidth / number * (i+0.5)
 					bullets.push(new Bullet(Bodies.circle(x, player.y - player.cannon.length, ballsize, { restitution: bounce }), player.gun.colour, damage));
 					Body.applyForce(bullets[bullets.length-1].body, {x: x, y: player.y}, {x: 0, y: force});
 				}
 			}, 5)
 			player.action(function() {
 				for (var i = 0; i < number; i++) {
-					x = canvaswidth / number * (i+0.5)
+					x = canvasWidth / number * (i+0.5)
 					bullets.push(new Bullet(Bodies.circle(x, player.y - player.cannon.length, ballsize, { restitution: bounce }), player.gun.colour, damage));
 					Body.applyForce(bullets[bullets.length-1].body, {x: x, y: player.y}, {x: 0, y: force});
 				}
@@ -210,7 +210,7 @@ guns = {
 			bounce = 1
 			number = 12
 			for (var i = 0; i < number; i++) {
-				x = canvaswidth / number * (i+0.5)
+				x = canvasWidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.polygon(x, player.y - player.cannon.length, 3, ballsize, { restitution: bounce }), this.colour, damage));
 				Body.setAngularVelocity(bullets[bullets.length-1].body, random(-0.1, 0.1))
 				Body.applyForce(bullets[bullets.length-1].body, {x: x, y: player.y}, {x: 0, y: force});
@@ -247,7 +247,7 @@ guns = {
 			]
 			bullets.push(new Bullet(Bodies.fromVertices(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, vertices, { restitution: bounce }), this.colour, damage, {
 				update: function(box) {
-					if (pos.y > canvasheight/* && box.hits == 0*/) {
+					if (pos.y > canvasHeight/* && box.hits == 0*/) {
 						force = -0.115
 						ballsize = 20
 						damage = 8
@@ -286,15 +286,15 @@ guns = {
 			]
 			bullets.push(new Bullet(Bodies.fromVertices(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, vertices, { restitution: bounce }), this.colour, damage, {
 				update: function(box) {
-					if (pos.y > canvasheight/* && box.hits == 0*/) {
+					if (pos.y > canvasHeight/* && box.hits == 0*/) {
 						force = -0.25
 						ballsize = 30
 						damage = 12
 						bounce = 0.6
 						number = 12
 						for (var i = 0; i < number; i++) {
-							x = canvaswidth / number * (i+0.5)
-							bullets.push(new Bullet(Bodies.circle(x, canvasheight, ballsize, { restitution: bounce }), player.gun.colour, damage));
+							x = canvasWidth / number * (i+0.5)
+							bullets.push(new Bullet(Bodies.circle(x, canvasHeight, ballsize, { restitution: bounce }), player.gun.colour, damage));
 							Body.applyForce(bullets[bullets.length-1].body, {x: box.body.position.x, y: box.body.position.y}, {x: 0, y: force});
 						}
 						box.rip();
@@ -329,10 +329,10 @@ guns = {
 				y: 0},
 			]
 			for (var i = 0; i < number; i++) {
-				x = canvaswidth / number * (i+0.5)
+				x = canvasWidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.fromVertices(x, player.y - player.cannon.length, vertices, { restitution: bounce }), this.colour, damage, {
 					update: function(box) {
-						if (pos.y > canvasheight/* && box.hits == 0*/) {
+						if (pos.y > canvasHeight/* && box.hits == 0*/) {
 							force = -0.115
 							ballsize = 20
 							damage = 8
@@ -359,7 +359,7 @@ guns = {
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 				onEnemy: function(box, meanie) {
 					damage = 3
-					minlength = canvaswidth
+					minlength = canvasWidth
 					meanest = meanie
 					for (var i = 0; i < enemies.length; i++) {
 						enemy = enemies[i];
@@ -445,11 +445,11 @@ guns = {
 			bounce = 0.7
 			number = 12
 			for (var i = 0; i < number; i++) {
-				x = canvaswidth / number * (i+0.5)
+				x = canvasWidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.circle(x, player.y - player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 					onEnemy: function(box, meanie) {
 						damage = 3
-						minlength = canvaswidth
+						minlength = canvasWidth
 						meanest = meanie
 						for (var i = 0; i < enemies.length; i++) {
 							enemy = enemies[i];
@@ -484,11 +484,11 @@ guns = {
 		normal: function(player) {
 			force = 0.15
 			ballsize = 25
-			damage = 2
+			damage = 1
 			bounce = 0.6
 			bullets.push(new Bullet(Bodies.circle(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 				onEnemy: function(box, meanie) {
-					for (var i = 0; i < 4; i++) {
+					for (var i = 0; i < 3; i++) {
 						meanie.action(function(me) {
 							force = 0.01
 							ballsize = 10
@@ -529,14 +529,14 @@ guns = {
 		ultimate: function(player) {
 			force = 0.15
 			ballsize = 25
-			damage = 2
+			damage = 1
 			bounce = 0.6
 			number = 12
 			for (var i = 0; i < number; i++) {
-				x = canvaswidth / number * (i+0.5)
+				x = canvasWidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.circle(x, player.y - player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 					onEnemy: function(box, meanie) {
-						for (var i = 0; i < 4; i++) {
+						for (var i = 0; i < 3; i++) {
 							meanie.action(function(me) {
 								force = 0.01
 								ballsize = 10
@@ -566,7 +566,7 @@ guns = {
 			bullets.push(new Bullet(Bodies.polygon(player.x + sin(player.angle) * player.cannon.length, player.y + cos(player.angle) * player.cannon.length, 4, ballsize, { restitution: bounce }), this.colour, damage, {
 				teleports: 0,
 				update: function(box) {
-					if (pos.y > canvasheight && box.special.teleports < 1) {
+					if (pos.y > canvasHeight && box.special.teleports < 1) {
 						Body.setPosition(box.body, {x: box.body.position.x, y: -player.y})
 						box.special.teleports++;
 					}
@@ -587,7 +587,7 @@ guns = {
 					if (radiusLength < 100) {
 						Body.scale(box.body, (radiusLength+1)/radiusLength, (radiusLength+1)/radiusLength)
 					}
-					if (pos.y > canvasheight && box.special.teleports < 5) {
+					if (pos.y > canvasHeight && box.special.teleports < 5) {
 						Body.setPosition(box.body, {x: box.body.position.x, y: -player.y})
 						box.special.teleports++;
 					}
@@ -603,11 +603,11 @@ guns = {
 			bounce = 1
 			number = 12
 			for (var i = 0; i < number; i++) {
-				x = canvaswidth / number * (i+0.5)
+				x = canvasWidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.polygon(x, player.y - player.cannon.length, 4, ballsize, { restitution: bounce }), this.colour, damage, {
 					teleports: 0,
 					update: function(box) {
-						if (pos.y > canvasheight && box.special.teleports < 1) {
+						if (pos.y > canvasHeight && box.special.teleports < 1) {
 							Body.setPosition(box.body, {x: box.body.position.x, y: -player.y})
 							box.special.teleports++;
 						}
@@ -659,7 +659,7 @@ guns = {
 			bounce = 1
 			number = 12
 			for (var i = 0; i < number; i++) {
-				x = canvaswidth / number * (i+0.5)
+				x = canvasWidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.circle(x, player.y - player.cannon.length, ballsize, { restitution: bounce }), this.colour, damage, {
 					update: function(box) {
 						Body.applyForce(box.body, box.body.position, {x: 0, y: -0.0012});
@@ -744,7 +744,7 @@ guns = {
 			]
 			number = 12
 			for (var i = 0; i < number; i++) {
-				x = canvaswidth / number * (i+0.5)
+				x = canvasWidth / number * (i+0.5)
 				bullets.push(new Bullet(Bodies.fromVertices(x, player.y - player.cannon.length, vertices, { restitution: bounce }), this.colour, damage, {
 					onEnemy: function(box, meanie) {
 						if (box.hits > 1) {

@@ -6,11 +6,13 @@ body {
 }
 
 canvas {
-	border: 10px solid darkgreen;
+	padding: 0px;
+	border: 0px solid darkgreen;
 	background: #515151;
 	position: absolute;
 	left: 50%;
-	transform: translate(-50%, 0);
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
 #brightener {

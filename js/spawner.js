@@ -78,14 +78,14 @@ spawnerinit = {
 				}
 				
 				for (var i = 0; i < number; i++) {
-					x = random(radius, canvaswidth - radius);
+					x = random(radius, canvasWidth - radius);
 					tries = 0
-					while (this.checkX({x: x, y: canvasheight + radius}, radius) && tries < this.maxtries) {
-						x = random(radius, canvaswidth - radius);
+					while (this.checkX({x: x, y: canvasHeight + radius}, radius) && tries < this.maxtries) {
+						x = random(radius, canvasWidth - radius);
 						tries++;
 					}
 					if (tries < this.maxtries) {
-						enemies.push(new Enemy(Bodies.circle(x, canvasheight + radius, radius, { isStatic: true }), colour, hp+1, 0.5, special))
+						enemies.push(new Enemy(Bodies.circle(x, canvasHeight + radius, radius, { isStatic: true }), colour, hp+1, 0.5, special))
 					}
 				}
 			} else if (this.world == "nether") {
@@ -173,17 +173,17 @@ spawnerinit = {
 					changingX = true;
 				}
 				
-				x = random(radius, canvaswidth - radius);
+				x = random(radius, canvasWidth - radius);
 				for (var i = 0; i < number; i++) {
 					if (changingX) {
-						x = random(radius, canvaswidth - radius);
+						x = random(radius, canvasWidth - radius);
 					}
-					y = canvasheight + radius + i * radius * 2.5
+					y = canvasHeight + radius + i * radius * 2.5
 
 					tries = 0
 
 					while (this.checkX({x: x, y: y}, radius) && tries < this.maxtries) {
-						x = random(radius, canvaswidth - radius);
+						x = random(radius, canvasWidth - radius);
 						tries++;
 					}
 					if (tries < this.maxtries) {
@@ -253,14 +253,14 @@ spawnerinit = {
 				}
 				
 				for (var i = 0; i < number; i++) {
-					x = random(radius, canvaswidth - radius);
+					x = random(radius, canvasWidth - radius);
 					tries = 0
-					while (this.checkX({x: x, y: canvasheight + radius}, radius) && tries < this.maxtries) {
-						x = random(radius, canvaswidth - radius);
+					while (this.checkX({x: x, y: canvasHeight + radius}, radius) && tries < this.maxtries) {
+						x = random(radius, canvasWidth - radius);
 						tries++;
 					}
 					if (tries < this.maxtries) {
-						enemies.push(new Enemy(Bodies.circle(x, canvasheight + radius, radius, { isStatic: true }), colour, hp+1, 0.3, special))
+						enemies.push(new Enemy(Bodies.circle(x, canvasHeight + radius, radius, { isStatic: true }), colour, hp+1, 0.3, special))
 					}
 				}
 			}
