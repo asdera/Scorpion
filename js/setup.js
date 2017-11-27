@@ -60,16 +60,21 @@ function init() {
     particles = [];
 	setBoundaries();
     tutorial.init();
+    menu.music.menuScreen.audio.loop = true;
+    menu.music.future.audio.loop = true;
+    menu.music.nether.audio.loop = true;
+    menu.music.boreal.audio.loop = true;
+    menu.music.menuScreen.audio.play();
 }
 
 function start() {
 	spawner = Object.assign({}, spawnerinit);
-    spawner.world = menu.music.selected;
 	player = Object.assign({}, playerinit);
 	setPlayer();
 	menu.state = "ingame";
     menu.semistate = "pregame";
     menu.tutorial = false;
+    changeWorld(menu.music.selected);
 }
 
 function reset() {
@@ -217,4 +222,14 @@ function shadowBlur(a) {
     if (menu.glow) {
         ctx.shadowBlur = a;
     }
+}
+
+function changeWorld(world) {
+    menu.music.menuScreen.audio.pause();
+    menu.music.future.audio.pause();
+    menu.music.nether.audio.pause();
+    menu.music.boreal.audio.pause();
+    spawner.world = world;
+    menu.sounds.warp.play();
+    menu.music[world].audio.play();
 }

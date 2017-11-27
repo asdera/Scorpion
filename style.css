@@ -7,7 +7,7 @@ body {
 
 canvas {
 	padding: 0px;
-	border: 0px solid darkgreen;
+	border: 10px solid darkgreen;
 	background: #515151;
 	position: absolute;
 	left: 50%;

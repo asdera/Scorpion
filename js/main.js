@@ -129,19 +129,25 @@ menu = {
 		length: 250,
 		selected: "future",
 		index: ["future", "nether", "boreal"],
+		menuScreen: {
+			audio: new Audio("audio/menuScreen.mp3"),
+		},
 		future: {
+			audio: new Audio("audio/future.mp3"),
 			x: -750,
 			y: -240,
 			colour: "navy",
 			hover: false,
 		},
 		nether: {
+			audio: new Audio("audio/nether.mp3"),
 			x: -750,
 			y: 50,
 			colour: "orangered",
 			hover: false,
 		},
 		boreal: {
+			audio: new Audio("audio/boreal.mp3"),
 			x: -750,
 			y: 340,
 			colour: "green",
@@ -210,6 +216,9 @@ menu = {
 			hover: false,
 			press: false,
 		}
+	},
+	sounds: {
+		warp: new Audio("audio/warp.wav"),
 	},
 	effects: [],
 	update: function() {

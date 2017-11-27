@@ -143,7 +143,10 @@ function mouseReleased() {
 				if (menu.icons.index[i] == "glow") {
 					menu.glow = !menu.glow;
 				} else if (menu.icons.index[i] == "mute") {
-
+					menu.music.menuScreen.audio.muted = !menu.music.menuScreen.audio.muted;
+				    menu.music.future.audio.muted = !menu.music.future.audio.muted;
+				    menu.music.nether.audio.muted = !menu.music.nether.audio.muted;
+				    menu.music.boreal.audio.muted = !menu.music.boreal.audio.muted;
 				} else if (menu.icons.index[i] == "github") {
 					window.open("https://github.com/asdera/Scorpion");
 				}
@@ -206,6 +209,13 @@ function keyPressed() {
 	if (keyCode == 71) {
 		// toggle glow
 		menu.glow = !menu.glow;
+	}
+	if (keyCode == 77) {
+		// toggle mute
+		menu.music.menuScreen.audio.muted = !menu.music.menuScreen.audio.muted;
+	    menu.music.future.audio.muted = !menu.music.future.audio.muted;
+	    menu.music.nether.audio.muted = !menu.music.nether.audio.muted;
+	    menu.music.boreal.audio.muted = !menu.music.boreal.audio.muted;
 	}
 }
 
