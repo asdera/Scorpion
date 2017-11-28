@@ -173,7 +173,7 @@ spawnerinit = {
 							player.fireRate *= 0.5;
 							player.action(function() {
 								player.fireRate *= 2;
-							}, 1000)
+							}, 600)
 							menu.score.real++;
 							menu.score.display = "real";
 							menu.action(function() {
@@ -206,7 +206,7 @@ spawnerinit = {
 					colour = "#ff9900"
 					hp = Math.floor(Math.random() * this.toughness);
 					radius = 75;
-					number = 4;
+					number = 3;
 					changingX = true;
 				}
 				
@@ -273,14 +273,14 @@ spawnerinit = {
 					special = {
 						outline: "#ff7700",
 						deathrattle: function(me) {
-							spawner.nextFrame += 100;
+							spawner.nextFrame += 400;
 							for (var e = 0; e < enemies.length; e++) {
 								boxe = enemies[e];
 								boxe.realSpeed = boxe.speed;
 								boxe.speed = 0;
 								boxe.action(function(me) {
 									me.speed = me.realSpeed;
-								}, 1000);
+								}, 400);
 							}
 							menu.score.real++;
 							menu.score.display = "real";
@@ -316,7 +316,7 @@ spawnerinit = {
 					radius = 100;
 					number = 1;
 				}
-				cx = random(radius*3, canvasWidth - radius*3);
+				cx = random(radius*3.5, canvasWidth - radius*3);
 				angler = random(0, 360);
 				for (var i = 0; i < number; i++) {
 					x = cx + cos((360/number)*i+angler) * radius * 2.5;

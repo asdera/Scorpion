@@ -49,6 +49,13 @@ boxyinit = {
 		this.vel++;
 		this.y += this.vel/10;
 		player.y = this.y + 50;
+		if (this.y > canvasHeight*3) {
+			menu.state = "endgame";
+			menu.semistate == "ingame"
+			boxy = {};
+			player = {};
+			spawner = {};
+		}
 	},
 }
 

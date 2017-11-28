@@ -27,7 +27,9 @@ function draw() {
 			obj.show();
 		}
 	}
-	boxy.update();
+	if (boxy.update) {
+		boxy.update();
+	}
 	for (var i = bullets.length - 1; i >= 0; i--) {
 		obj = bullets[i];
 		if (obj.special.behind) {
@@ -38,7 +40,9 @@ function draw() {
 			}
 		}
 	}
-	boxy.afterupdate();
+	if (boxy.afterupdate) {
+		boxy.afterupdate();
+	}
 	for (var i = bullets.length - 1; i >= 0; i--) {
 		obj = bullets[i];
 		if (!obj.special.behind) {
@@ -82,6 +86,26 @@ menu = {
 		angle: 0,
 		length: 150,
 		arrow: 60,
+		hover: false,
+		press: false,
+	},
+	restartButton: {
+		x: -600,
+		y: 50,
+		offsetArrow: 10,
+		angle: 0,
+		length: 150,
+		arrow: 60,
+		hover: false,
+		press: false,
+	},
+	backButton: {
+		x: 600,
+		y: 50,
+		offsetArrow: -10,
+		angle: 0,
+		length: 150,
+		arrow: -60,
 		hover: false,
 		press: false,
 	},
@@ -241,6 +265,22 @@ menu = {
 				this.ingame()
 			} else {
 				this.ingame()
+			}
+			
+		}
+		if (this.state == "endgame") {
+			this.ingame();
+			if (this.semistate == "ingame") {
+				ctx.globalAlpha = 1 - this.fade;
+				if (this.fade <= 0.02) {
+					this.fade = 1;
+					this.semistate = "none";
+				} else {
+					this.fade -= 0.02
+				}
+				this.endgame();
+			} else {
+				this.endgame();
 			}
 			
 		}
@@ -594,7 +634,6 @@ menu = {
 	    triangle(this.center.x - this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y + this.playButton.arrow, this.center.x + this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y, this.center.x - this.playButton.arrow + this.playButton.offsetArrow, this.center.y + this.playButton.y - this.playButton.arrow);
 		// trasforms
 		this.playButton.angle += 2;
-		shadowBlur(0);
 	},
 	ingame: function() {
 		// Effects
@@ -638,6 +677,75 @@ menu = {
 	    } else {
 	    	text(String(this.score.fake), this.center.x, this.center.y);
 	    }
+	},
+	endgame: function() {
+		textSize(200);
+		textAlign(CENTER, CENTER);
+		text("Final Score", this.center.x, this.center.y-275);
+		shadowColor("blue");
+		text("Bonus Score: "+String(this.score.fake), this.center.x, this.center.y+325);
+
+		shadowColor("yellow");
+		textSize(75);
+		push();
+		translate(canvasWidth/2, canvasHeight/2);
+		rotate(-45);
+		translate(-canvasWidth/2, -canvasHeight/2);
+		text("Play Again", menu.center.x-400, menu.center.y-650)
+
+		translate(canvasWidth/2, canvasHeight/2);
+		rotate(90);
+		translate(-canvasWidth/2, -canvasHeight/2);
+		text("Back to Menu", menu.center.x+400, menu.center.y-650)
+		pop();
+
+		if (this.restartButton.press) {
+			shadowColor("yellow");
+		} else if (this.restartButton.hover) {
+			shadowColor("red");
+		} else {
+			shadowColor("white");
+		}
+		shadowBlur(20);
+		strokeWeight(10);
+		fill("#202020");
+
+		beginShape();
+	    for (i = 0; i < 6; i++) {
+	    	px = this.center.x + this.restartButton.x + cos(i * 60 + this.restartButton.angle) * this.restartButton.length;
+	        py = this.center.y + this.restartButton.y + sin(i * 60 + this.restartButton.angle) * this.restartButton.length;
+	        vertex(px, py);
+	    }
+	    endShape(CLOSE);
+	    fill("red");
+	    stroke("white");
+	    triangle(this.center.x - this.restartButton.arrow + this.restartButton.offsetArrow + this.restartButton.x, this.center.y + this.restartButton.y + this.restartButton.arrow, this.center.x + this.restartButton.arrow + this.restartButton.offsetArrow + this.restartButton.x, this.center.y + this.restartButton.y, this.center.x - this.restartButton.arrow + this.restartButton.offsetArrow + this.restartButton.x, this.center.y + this.restartButton.y - this.restartButton.arrow);
+		// trasforms
+		this.restartButton.angle += 2;
+
+		if (this.backButton.press) {
+			shadowColor("yellow");
+		} else if (this.backButton.hover) {
+			shadowColor("red");
+		} else {
+			shadowColor("white");
+		}
+		shadowBlur(20);
+		strokeWeight(10);
+		fill("#202020");
+
+		beginShape();
+	    for (i = 0; i < 6; i++) {
+	    	px = this.center.x + this.backButton.x + cos(i * 60 + this.backButton.angle) * this.backButton.length;
+	        py = this.center.y + this.backButton.y + sin(i * 60 + this.backButton.angle) * this.backButton.length;
+	        vertex(px, py);
+	    }
+	    endShape(CLOSE);
+	    fill("red");
+	    stroke("white");
+	    triangle(this.center.x - this.backButton.arrow + this.backButton.offsetArrow + this.backButton.x, this.center.y + this.backButton.y + this.backButton.arrow, this.center.x + this.backButton.arrow + this.backButton.offsetArrow + this.backButton.x, this.center.y + this.backButton.y, this.center.x - this.backButton.arrow + this.backButton.offsetArrow + this.backButton.x, this.center.y + this.backButton.y - this.backButton.arrow);
+		// trasforms
+		this.backButton.angle += 2;
 	},
 	action: function(effect, time) {
     	this.effects.push({effect: effect, time: time})

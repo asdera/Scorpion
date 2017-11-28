@@ -68,6 +68,17 @@ function mouseHovered() {
 		} else {
 			menu.playButton.hover = false;
 		}
+	} else if (menu.state == "endgame") {
+		if (getLength({x: canvasX, y: canvasY}, {x: menu.center.x + menu.restartButton.x, y: menu.center.y + menu.restartButton.y}) <= menu.restartButton.length) {
+			menu.restartButton.hover = true;
+		} else {
+			menu.restartButton.hover = false;
+		}
+		if (getLength({x: canvasX, y: canvasY}, {x: menu.center.x + menu.backButton.x, y: menu.center.y + menu.backButton.y}) <= menu.backButton.length) {
+			menu.backButton.hover = true;
+		} else {
+			menu.backButton.hover = false;
+		}
 	}
 }
 
@@ -108,6 +119,13 @@ function mousePressed() {
 		}
 		if (menu.rightSide.open.hover) {
 			menu.rightSide.open.press = true;
+		}
+	} else if (menu.state == "endgame") {
+		if (menu.restartButton.hover) {
+			menu.restartButton.press = true;
+		}
+		if (menu.backButton.hover) {
+			menu.backButton.press = true;
 		}
 	}
 	for (var i = 0; i < 4; i++) {
@@ -151,6 +169,16 @@ function mouseReleased() {
 					window.open("https://github.com/asdera/Scorpion");
 				}
 			}
+		}
+	} else if (menu.state == "endgame") {
+		if (menu.restartButton.press) {
+			reset();
+			start();
+			menu.restartButton.press = false;
+		}
+		if (menu.backButton.press) {
+			reset();
+			menu.backButton.press = false;
 		}
 	}
 }

@@ -51,6 +51,11 @@ function setup() {
 }
 
 function init() {
+    menu.score = {
+        fake: 0,
+        real: 0,
+        display: "fake"
+    }
 	player = {}
 	boxy = Object.assign({}, boxyinit);
 	spawner = {}
@@ -79,6 +84,9 @@ function start() {
 
 function reset() {
 	clearWorld();
+    menu.music.future.audio.pause();
+    menu.music.nether.audio.pause();
+    menu.music.boreal.audio.pause();
 	menu.state = "pregame";
 }
 

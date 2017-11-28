@@ -5,7 +5,7 @@ body {
 	zoom: 100%;
 }
 
-canvas {
+canvas, #loading {
 	padding: 0px;
 	border: 10px solid darkgreen;
 	background: #515151;
@@ -13,6 +13,8 @@ canvas {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+	font-size: 120px;
+	font-family: "Trebuchet MS";
 }
 
 #brightener {
