@@ -683,7 +683,7 @@ menu = {
 		textAlign(CENTER, CENTER);
 		text("Final Score", this.center.x, this.center.y-275);
 		shadowColor("blue");
-		text("Bonus Score: "+String(this.score.fake), this.center.x, this.center.y+325);
+		text("Bonus Score: "+String(this.score.real), this.center.x, this.center.y+325);
 
 		shadowColor("yellow");
 		textSize(75);
