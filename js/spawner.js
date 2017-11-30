@@ -129,7 +129,7 @@ spawnerinit = {
 					hp = Math.floor(Math.random() * 0.5 * this.toughness);
 					radius = 75;
 					colour = "#420000"
-					hp = Math.floor(Math.random() * 3 * this.toughness);
+					hp = Math.floor(Math.random() * this.toughness);
 					radius = 60;
 					number = 3;
 				} else if (dice < 0.2) {
@@ -224,7 +224,7 @@ spawnerinit = {
 						tries++;
 					}
 					if (tries < this.maxTries) {
-						enemies.push(new Enemy(Bodies.circle(x, y, radius, { isStatic: true }), colour, hp+1, 0.7, special))
+						enemies.push(new Enemy(Bodies.circle(x, y, radius, { isStatic: true }), colour, hp+1, 0.6, special))
 					}
 				}
 			} else if (this.world == "boreal") {
@@ -245,7 +245,7 @@ spawnerinit = {
 					number = 4;
 				} else if (dice < 0.4) {
 					colour = "#ffe949"
-					hp = Math.floor(Math.random() * this.toughness);
+					hp = Math.floor(Math.random() * 1.5 * this.toughness);
 					radius = 50;
 					number = 6;
 				} else if (dice < 0.5) {
@@ -327,7 +327,7 @@ spawnerinit = {
 						tries++;
 					}
 					if (tries < this.maxTries) {
-						enemies.push(new Enemy(Bodies.circle(x, y, radius, { isStatic: true }), colour, hp+1, 0.3, special))
+						enemies.push(new Enemy(Bodies.circle(x, y, radius, { isStatic: true }), colour, hp+1, 0.4, special))
 					}
 				}
 			}

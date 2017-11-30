@@ -244,6 +244,7 @@ function keyPressed() {
 	    menu.music.future.audio.muted = !menu.music.future.audio.muted;
 	    menu.music.nether.audio.muted = !menu.music.nether.audio.muted;
 	    menu.music.boreal.audio.muted = !menu.music.boreal.audio.muted;
+	    menu.sounds.warp.muted = !menu.sounds.warp.muted;
 	}
 }
 

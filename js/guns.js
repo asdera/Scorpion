@@ -225,7 +225,7 @@ guns = {
 		normal: function(player) {
 			force = 0.3
 			ballsize = 8
-			damage = 4
+			damage = 5
 			bounce = 0.6
 			vertices = [
 				{x: player.x + cos(player.angle) * 3 * ballsize + sin(player.angle) * 4 * ballsize,
