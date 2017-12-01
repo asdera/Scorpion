@@ -1,7 +1,7 @@
 # Scorpion Ball
 Use your inner Scorpion to shoot balls at other balls in this Retro-style shooter.
 
-This is a fast paced survival game that's playable on the browser. It's pretty challeging and it's decently skill based.
+This is a fast paced survival game that's playable on the browser. It's pretty challenging and it's decently skill based.
 Hostile balls will spawn from the bottom of the screen to attack your health bar.
 Don't let that happen, shoot them!
 
