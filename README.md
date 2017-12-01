@@ -33,6 +33,8 @@ M - Toggle mute
 
 C - Change weapons (only works in menu screen)
 
+R - Restart
+
 ## Game Info
 
 ### Worlds
@@ -138,7 +140,7 @@ Deadshot - power fires a grizzly bear that you can control
 
 #### M A G N A V O X - Shooting Stars
 
-### Contribution
+### Contributors
 
 [Andrew Wang](https://github.com/asdera)
 

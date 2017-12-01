@@ -7,6 +7,12 @@
 function mouseHovered() {
 	canvasX = mouseX/canvasZoom;
 	canvasY = mouseY/canvasZoom;
+	if (windowWidth == 1200) {
+		canvasX += 78;	
+	}
+	if (windowHeight == 600) {
+		canvasY += 30;	
+	}
 	//print(canvasX, canvasY)
 	if (menu.state == "pregame") {
 		if (menu.leftSide.show) {
@@ -86,6 +92,12 @@ function mouseHovered() {
 function mousePressed() {
 	canvasX = mouseX/canvasZoom;
 	canvasY = mouseY/canvasZoom;
+	if (windowWidth == 1200) {
+		canvasX += 78;	
+	}
+	if (windowHeight == 600) {
+		canvasY += 30;	
+	}
 	if (menu.state == "pregame") {
 		for (i = 0; i < menu.difficulty.index.length; i++) {
 			difficultyShape = menu.difficulty[menu.difficulty.index[i]]
