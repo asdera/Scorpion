@@ -682,7 +682,7 @@ menu = {
 		textSize(200);
 		textAlign(CENTER, CENTER);
 		shadowColor("red");
-		text(this.difficulty.selected.charAt(0).toUpperCase() + this.difficulty.selected.slice(1), this.center.x, this.center.y-275);
+		text(this.difficulty.selected.charAt(0).toUpperCase() + this.difficulty.selected.slice(1), this.center.x, this.center.y-325);
 		shadowColor("blue");
 		text("Bonus Score: "+String(this.score.real), this.center.x, this.center.y+325);
 
