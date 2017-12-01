@@ -1,7 +1,9 @@
 # Scorpion Ball
-Use your inner Scorpion to shoot balls at other balls in this Retro-style shooter. 
+Use your inner Scorpion to shoot balls at other balls in this Retro-style shooter.
 
-This is a submission to Github Game Off 2017. I originally started building this game because there's not a load of great games that arent blocked at my school. Later one of my friends who won a Github Bug Bounty told me about Github Game Off. I found out the theme was throwback. I was able to put everything that I felt was forgotten into one project. This game takes inspiration from other games like Peggle, Plinko and Bubble Shooter. It's a fast paced survival that's playable on the browser. It uses an 80s futuristic design with appealing glowing effects. This game also includes 80s retro and synthwave music from one of my favourite artist. Even though now, he has unexpectedly disappeared from the internet. If you’re playing on a school computer and the glow causes lag, then turn it off by pressing G. 
+This is a fast paced survival game that's playable on the browser. It's pretty challeging and it's decently skill based.
+
+This is a submission to Github Game Off 2017. I originally started building this game because there's not a load of great games that arent blocked at my school. Later one of my friends who won a Github Bug Bounty told me about Github Game Off. I found out the theme was throwback. I was able to put everything that I felt was forgotten into one project. This game takes inspiration from other games like Peggle, Plinko and Bubble Shooter. It uses an 80s futuristic design with appealing glowing effects. This game also includes 80s retro and synthwave music from one of my favourite artist. Even though now, he has unexpectedly disappeared from the internet. If you’re playing on a school computer and the glow causes lag, then turn it off by pressing G. 
 
 Hostile balls will spawn from the bottom of the screen to attack your health bar.
 Don't let that happen, shoot them!
