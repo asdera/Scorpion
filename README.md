@@ -81,7 +81,7 @@ Purple - Shoots mutiple smaller balls in a line
 Death Star - power fires a deadly lazer blow
 
 #### Blaster
-Gray - Shoots mutiple smaller balls in a line 
+Gray - Shoots mutiple shells in a wide angle
 
 Make it Rain - power fires a power spray that covers a wide angle
 
