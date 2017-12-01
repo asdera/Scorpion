@@ -75,7 +75,7 @@ spawnerinit = {
 					hp = Math.floor(this.toughness*4);
 					radius = 200;
 					special = {
-						outline: "green",
+						outline: "purple",
 						deathrattle: function(me) {
 							changeWorld("nether");
 							for (var e = 0; e < enemies.length; e++) {
@@ -187,7 +187,7 @@ spawnerinit = {
 					hp = Math.floor(this.toughness*4);
 					radius = 200;
 					special = {
-						outline: "green",
+						outline: "purple",
 						deathrattle: function(me) {
 							changeWorld("boreal");
 							for (var e = 0; e < enemies.length; e++) {
@@ -295,7 +295,7 @@ spawnerinit = {
 					hp = Math.floor(this.toughness*4);
 					radius = 200;
 					special = {
-						outline: "green",
+						outline: "purple",
 						deathrattle: function(me) {
 							changeWorld("future");
 							for (var e = 0; e < enemies.length; e++) {
