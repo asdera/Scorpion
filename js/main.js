@@ -62,7 +62,7 @@ menu = {
 	state: "pregame",
 	semistate: "none",
 	tutorial: true,
-	glow: true,
+	glow: false,
 	beat: 2,
 	fade: 1,
 	width: 500,
