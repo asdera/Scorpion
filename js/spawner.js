@@ -125,7 +125,7 @@ spawnerinit = {
 					radius = 100;
 					number = 2;
 				} else if (dice < 0.4) {
-					colour = "#ff6060"
+					colour = "#a1afc6"
 					hp = Math.floor(Math.random() * 0.5 * this.toughness);
 					radius = 75;
 					colour = "#420000"
