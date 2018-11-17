@@ -1,0 +1,21 @@
+body {
+	text-align: center;
+	cursor: crosshair;
+	background: purple;
+	zoom: 100%;
+}
+
+canvas, #loading {
+	padding: 0px;
+	background: #515151;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 120px;
+	font-family: "Trebuchet MS";
+}
+
+#brightener {
+	background: white;
+}
