@@ -37,8 +37,8 @@ spawnerinit = {
 					radius = 60;
 					number = 10;
 				} else if (dice < 0.5) {
-					guntype = random(guns.index)
-					colour = guns[guntype].colour
+					guntype = random(guns.index);
+					colour = guns[guntype].colour;
 					hp = Math.floor(this.toughness);
 					radius = 60;
 					special = {

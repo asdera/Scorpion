@@ -141,7 +141,7 @@ playerinit = {
 
 function setPlayer() {
 	player.y += boxy.outline/4
-	player.gun = guns["bouncer"]
+	player.gun = guns[random(guns.index)]
 	player.cannon = {
 		outline: 5,
 		bodysize: 90,
