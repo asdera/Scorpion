@@ -124,7 +124,9 @@ function Enemy(body, colour, hp, speed, special={}) {
     }
 
     Body.translate(this.body, {x: 0, y: -this.speed});
-    
+    if (this.special.movement) {
+      this.special.movement(this);
+    }
     if (this.body.position.y <= boxy.height + boxy.y) {
       player.damage();
       this.rip();

@@ -9,11 +9,11 @@ spawnerinit = {
 		this.frame++;		
 		if (this.frame >= this.nextFrame) {
 
-			dice = Math.random();
+			var dice = random();
 
-			special = {};
+			var special = {};
 
-			changingX = false;
+			var changingX = false;
 
 			if (this.world == "future") {
 				if (dice < 0.1) {
@@ -90,13 +90,29 @@ spawnerinit = {
 						}
 					}
 					number = 1;
+				} else if (dice < 0.7) {
+					colour = "silver";
+					hp = Math.floor(Math.random() * this.toughness * 7);
+					special = {
+						dir: random([-1, 1]),
+						movement: function(me) {
+							var pos = me.body.position;
+							Body.translate(me.body, {x: 12*me.speed * special.dir, y: 0});
+							if (pos.x - me.body.circleRadius <= 0) {
+								special.dir = 1;
+							} else if (pos.x + me.body.circleRadius >= canvasWidth) {
+								special.dir = -1;
+							}
+						}
+					}
+					radius = 90;
+					number = 1;
 				} else {
 					colour = "#0099ff"
 					hp = Math.floor(Math.random() * this.toughness);
 					radius = 60;
 					number = 5;
 				}
-				
 				for (var i = 0; i < number; i++) {
 					x = random(radius, canvasWidth - radius);
 					tries = 0
@@ -128,7 +144,7 @@ spawnerinit = {
 					colour = "#a1afc6"
 					hp = Math.floor(Math.random() * 0.5 * this.toughness);
 					radius = 75;
-					colour = "#420000"
+					colour = "##f442c5"
 					hp = Math.floor(Math.random() * this.toughness);
 					radius = 60;
 					number = 3;
@@ -201,6 +217,23 @@ spawnerinit = {
 							}, 100)
 						}
 					}
+					number = 1;
+				} else if (dice < 0.7) {
+					colour = "silver";
+					hp = Math.floor(Math.random() * this.toughness * 5);
+					special = {
+						dir: random([-1, 1]),
+						movement: function(me) {
+							var pos = me.body.position;
+							Body.translate(me.body, {x: 16*me.speed * special.dir, y: 0});
+							if (pos.x - me.body.circleRadius <= 0) {
+								special.dir = 1;
+							} else if (pos.x + me.body.circleRadius >= canvasWidth) {
+								special.dir = -1;
+							}
+						}
+					}
+					radius = 60;
 					number = 1;
 				} else {
 					colour = "#ff9900"
@@ -309,6 +342,23 @@ spawnerinit = {
 							}, 100)
 						}
 					}
+					number = 1;
+				} else if (dice < 0.7) {
+					colour = "silver";
+					hp = Math.floor(Math.random() * this.toughness * 9);
+					special = {
+						dir: random([-1, 1]),
+						movement: function(me) {
+							var pos = me.body.position;
+							Body.translate(me.body, {x: 8*me.speed * special.dir, y: 0});
+							if (pos.x - me.body.circleRadius <= 0) {
+								special.dir = 1;
+							} else if (pos.x + me.body.circleRadius >= canvasWidth) {
+								special.dir = -1;
+							}
+						}
+					}
+					radius = 100;
 					number = 1;
 				} else {
 					colour = "#307a00"
