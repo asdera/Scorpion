@@ -65,6 +65,10 @@ function init() {
     particles = [];
 	setBoundaries();
     tutorial.init();
+    menu.music.menuScreen.audio.muted = !menu.music.menuScreen.audio.muted;
+    menu.music.future.audio.muted = !menu.music.future.audio.muted;
+    menu.music.nether.audio.muted = !menu.music.nether.audio.muted;
+    menu.music.boreal.audio.muted = !menu.music.boreal.audio.muted;
     menu.music.menuScreen.audio.loop = true;
     menu.music.future.audio.loop = true;
     menu.music.nether.audio.loop = true;
